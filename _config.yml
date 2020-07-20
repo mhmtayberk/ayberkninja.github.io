@@ -3,11 +3,6 @@ markdown: kramdown
 url: "ayberk.ninja"
 baseurl: ""
 
-# for atom feed
-author:
-  name: Ayberk
-  email: -
-
 plugins:
   - jekyll-paginate
   - jemoji
