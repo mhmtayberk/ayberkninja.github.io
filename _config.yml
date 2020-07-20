@@ -37,4 +37,4 @@ defaults:
       layout: "post"
       permalink: /posts/:categories/:year/:month/:day/:title/
 
-exclude: ["sitemap.xml", "feed.xml", "LICENSE", "README.md"]
+exclude: ["sitemap.xml", "feed.xml", "LICENSE"]
