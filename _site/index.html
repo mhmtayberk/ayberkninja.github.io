@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Dark Reader | Blog</title>
+  <link rel="stylesheet" href="/jekyll-theme-dark-reader/assets/css/mark.css" />
+  <link rel="stylesheet" href="/jekyll-theme-dark-reader/assets/css/custom.css" />
+  <!-- PILL JS LOADER SYLE -->
+  <style>
+    #indicator {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      display: none;
+      background-color: #72b6b5;
+    }
+
+    .is-loading {
+      display: block;
+      animation: blink 1.5s linear infinite;
+    }
+
+    @keyframes blink {
+      from,
+      to {
+        background-color: #72b6b5;
+      }
+
+      50% {
+        background-color: #42b983;
+      }
+    }
+
+    #project-link {
+      display: block;
+      position: fixed;
+      padding: 8px;
+      top: 0;
+      right: 0;
+    }
+  </style>
+  <!-- PILL JS -->
+  <script src="/jekyll-theme-dark-reader/assets/js/pill.min.js"></script>
+  <script>
+    // this is for pill js as the normal link wont work
+    function openLink(url) {
+      window.open(url, "_blank");
+    }
+  </script>
+</head>
+
+  <body>
+    <div id="indicator"></div>
+    <div id="page">
+      <style>
+        .title {
+          padding: 5%;
+          color: #101417;
+          font-size: 18px;
+          font-weight: bold;
+          text-align: center;
+          background: #f78e66;
+          display: grid;
+        }
+        .meta {
+          font-size: 0.7rem;
+          font-weight: normal;
+          text-transform: uppercase;
+        }
+      </style>
+      <!-- header -->
+      <header>
+	<a href="/jekyll-theme-dark-reader/">
+		<h3>Dark Reader</h3>
+	</a>
+</header>
+
+      <!-- nav -->
+      <nav>
+	
+		
+			<a href="/jekyll-theme-dark-reader/">Home</a>
+		
+	
+		
+			<a href="/jekyll-theme-dark-reader/about">About</a>
+		
+	
+		
+			<a href="#!" onclick="openLink('/jekyll-theme-dark-reader/feed.xml')">Feed</a>
+		
+	
+</nav>
+      <!-- page content -->
+      <main class="post-list">
+        <p class="title">Blog</p>
+        
+<a href="/jekyll-theme-dark-reader/posts/jekyll/2018/10/09/Jekyll/">Hello Jekyll</a>
+
+<a href="/jekyll-theme-dark-reader/posts/2014/08/12/the-businessman-and-fisherman/">The Businessman & the fisherman</a>
+
+<a href="/jekyll-theme-dark-reader/posts/1963/08/28/i-have-a-dream/">I Have a Dream</a>
+
+<a href="/jekyll-theme-dark-reader/posts/1948/12/12/the-purpose-of-education/">The Purpose of Education</a>
+
+
+      </main>
+
+      <!-- footer -->
+      <footer>
+	<p>
+		This is a bio of me.
+	</p>
+	<p>
+		&copy 2019 | Dark Reader
+	</p>
+</footer>
+<script src='/jekyll-theme-dark-reader/assets/js/site.js' id="pill_site_script" type='module'></script>
+    </div>
+  </body>
+</html>
