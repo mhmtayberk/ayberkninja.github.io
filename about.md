@@ -1,5 +1,5 @@
 ---
-title: ayberk.ninja | About Me
+title: About Me
 layout: about
 short_bio: Hi there my name is Ayberk.
 ---
