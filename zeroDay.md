@@ -1,6 +1,6 @@
 ---
 title: ayberk.ninja | 0Day
-layout: collections_layout
+layout: zeroDay
 permalink: /zeroDay/
 ---
 
