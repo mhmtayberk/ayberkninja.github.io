@@ -3,6 +3,8 @@ list:
     url: ""
   - title: About
     url: about
+  - title: 0Day
+    url: zeroDay
   - title: Feed
     url: feed.xml
     target: "_blank"
