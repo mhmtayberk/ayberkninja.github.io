@@ -1,5 +1,5 @@
 ---
-title: ayberk.ninja | 0Day
+title: 0Day
 permalink: /zeroDay/
 ---
 
