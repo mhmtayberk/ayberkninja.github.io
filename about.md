@@ -1,8 +1,10 @@
 ---
-title: ayberk.ninja
+title: ayberk.ninja | About Me
 layout: about
-short_bio: Hi there this is Sharad, the developer of this theme.
+short_bio: Hi there my name is Ayberk.
 ---
 
-This is long bio.
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+I'm penetration tester [@prismacsi](https://www.prismacsi.com/). I have been interested in all kinds of informatics for a long time. I realized that my interest in cyber security is quite high. 
+
+## Hack All Day
+["Hack All Day"](http://www.hackallday.com/) is an independent organization that we have established with a friend. Its aim is to confuse individuals who want to progress in the cyber security. We try organize events, write blog posts and draw sweepstakes.
