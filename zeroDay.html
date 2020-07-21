@@ -1,121 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>ayberk.ninja | 0Day</title>
-  <link rel="stylesheet" href="/assets/css/mark.css" />
-  <link rel="stylesheet" href="/assets/css/custom.css" />
-  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
-  <!-- PILL JS LOADER SYLE -->
-  <style>
-    #indicator {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      height: 3px;
-      display: none;
-      background-color: #72b6b5;
-    }
+---
+title: 0Day
+layout: collections_layout
+---
 
-    .is-loading {
-      display: block;
-      animation: blink 1.5s linear infinite;
-    }
+<main class="content">
+	<h1 id="header-1">Coming Soon...</h1>
+</main>
 
-    @keyframes blink {
-      from,
-      to {
-        background-color: #72b6b5;
-      }
-
-      50% {
-        background-color: #42b983;
-      }
-    }
-
-    #project-link {
-      display: block;
-      position: fixed;
-      padding: 8px;
-      top: 0;
-      right: 0;
-    }
-  </style>
-  <!-- PILL JS -->
-  <script src="/assets/js/pill.min.js"></script>
-  <script>
-    // this is for pill js as the normal link wont work
-    function openLink(url) {
-      window.open(url, "_blank");
-    }
-  </script>
-</head>
-
-  <body>
-    <div id="indicator"></div>
-    <div id="page">
-      <style>
-        .title {
-          padding: 7%;
-          color: #101417;
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
-          background: #00E6E6;
-          display: grid;
-        }
-        .meta {
-          font-size: 0.7rem;
-          font-weight: normal;
-          text-transform: uppercase;
-        }
-      </style>
-      <!-- header -->
-      <header>
-	<a href="/_site/">
-		<h3>ayberk.ninja <img src="/img/ninja.png" width="25px" height="25px"></h3>
-	</a>
-</header>
-
-      <!-- nav -->
-      <nav>
-
-
-			<a href="/">Home</a>
-
-
-
-			<a href="/about">About</a>
-
-
-
-      <a href="/zeroDay">0Day</a>
-
-
-
-			<a href="#!" onclick="openLink('/feed.xml')">Feed</a>
-
-
-</nav>
-      <!-- page content -->
-      <main class="content">
-
-<h1 id="header-1">Coming Soon...</h1>
-
-      </main>
-
-      <!-- footer -->
-      <footer>
+<footer>
 	<p>
-    <i class="fa fa-github" aria-hidden="true"></i> <a href="https://github.com/mhmtayberk">Github</a> |
-    <i class="fa fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/mhmtayberk">Twitter</a> |
-    <i class="fa fa-linkedin-square" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/mhmtayberk/">LinkedIn</a>
+	    <i class="fa fa-github" aria-hidden="true"></i> <a href="https://github.com/mhmtayberk">Github</a> |
+	    <i class="fa fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/mhmtayberk">Twitter</a> |
+	    <i class="fa fa-linkedin-square" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/mhmtayberk/">LinkedIn</a>
 	</p>
 </footer>
-<script src='/assets/js/site.js' id="pill_site_script" type='module'></script>
-    </div>
-  </body>
-</html>
+
+<script src='{{site.baseurl}}/assets/js/site.js' id="pill_site_script" type='module'></script>
+<link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
