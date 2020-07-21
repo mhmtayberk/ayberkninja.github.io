@@ -1,6 +1,6 @@
 * {
 	outline: none;
-	--theme-color: #f78e66;
+	--theme-color: #08CACA;
 }
 body {
 	color: rgb(167, 158, 139) !important;
@@ -94,7 +94,7 @@ footer {
 	font-weight: bold;
 	color: #72b6b5;
 	font-size: 1.2rem;
-	margin: 4rem 20% 4rem 20%;
+	margin: 4rem 20% 4rem 39.5%;
 }
 
 @media screen and (max-width: 780px) {
