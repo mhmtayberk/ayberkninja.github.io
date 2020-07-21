@@ -1,6 +1,6 @@
 ---
 title: 0Day
-layout: layout
+layout: zeroDay
 permalink: /zeroDay/
 ---
 
