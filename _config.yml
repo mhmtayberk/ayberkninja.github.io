@@ -31,5 +31,9 @@ defaults:
     values:
       layout: "post"
       permalink: /posts/:categories/:year/:month/:day/:title/
+      
+webrick:
+  headers:
+    X-XSS-Protection: 1
 
 exclude: ["sitemap.xml", "feed.xml", "LICENSE"]
