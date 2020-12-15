@@ -4,6 +4,7 @@ title: Hello World 👋
 date: 2020-07-21
 tag: hello world, ayberk.ninja, mehmet ayberk, cyber security
 categories: general
+permalink: hello-world
 published: true
 ---
 
