@@ -14,4 +14,4 @@ gem "jekyll-sitemap", "~> 1.4"
 
 gem "jekyll-feed", "~> 0.13.0"
 
-gem "kramdown", ">= 2.3.0"
+gem "kramdown", ">= 2.3.1"
