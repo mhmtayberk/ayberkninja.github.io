@@ -12,4 +12,6 @@ I'm penetration tester <a href="https://www.prismacsi.com/" target="_blank">@pri
 ## Seminars (I Taught)
 <a href="https://www.youtube.com/watch?v=pyRXAvTJIzc&t=1400s" target="_blank">IEEE Beykent - How To Build Secure Login?</a> <br>
 <a href="https://www.facebook.com/beykentodek/posts/1305324409650299/" target="_blank">Beykent BMK - Cyber Security 101</a> <br>
-Balıkesir University - Business Branches in Informatics
+Balıkesir University - Business Branches in Informatics <br>
+Muharrem Hasbi Anatolian High School - Cyber Bullying Seminar <br>
+Muharrem Hasbi Anatolian High School - Robotics Workshop Cyber Security Training
