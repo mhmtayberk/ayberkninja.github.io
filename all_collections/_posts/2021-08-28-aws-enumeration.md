@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bulutlara Dokunmak - AWS/Enumeration
+title: Bulutlara Dokunmak ☁️ - AWS/Enumeration
 date: 2021-08-28
 tag: aws, aws enum, aws recon, aws enumeration, cloud security, cloud recon
 categories: general
