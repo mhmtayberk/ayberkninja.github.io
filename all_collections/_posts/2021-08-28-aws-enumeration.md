@@ -40,14 +40,14 @@ Kabaca temel bilgileri edindiğimize göre enumeration aşamalarına yavaş yava
 
 ## Domain Üzerinde AWS Kullanımını Öğrenmek
 Authenticated olmadan yapabileceğiniz bir işlem. Bir domain üzerinde AWS kullanılıp kullanılmadığını öğrenebiliriz. Bunun en basit yöntemlerinden biri Linux sistemlerde varsayılan olarak gelen host komutunu kullanmaktır. Reverse DNS lookup yaparak **host** komutu ile bir alan adının AWS arkasında olup olmadığını öğrenebiliriz. Aşağıdaki görselde bir örnek görmektesiniz;
-<img src="/assets/blog-photos/aws-enumeration/aws-enum-host.png" alt="Host Command">
+<img src="/assets/blog-photos/aws-enumeration/aws-enum-host.png" class="imgCenter" alt="Host Command">
 
 Aynı işlemi **nslookup** ve **dig** komutları ile yapmakta mümkün. Ayrıca yukarıdaki görseli dikkatli incelerseniz aslında Bucket'ın Region'ını da öğrenmiş olduk. Buradan yola çıkarak AWS CLI aracı ile daha çeşitli bilgiler elde edebiliriz.
 ```sh
 aws s3 ls  s3://flaws.cloud/ --no-sign-request --region us-west-2
 ```
 Yukarıdaki komutta görmüş olduğunuz üzere AWS CLI aracını kullanarak Region'ı da bildiğimizi varsayarak ilgili Bucket üzerindeki dosyaları görmeye çalışıyoruz.
-<img src="/assets/blog-photos/aws-enumeration/aws-s3-ls.png" alt="AWS CLI S3 ls Command">
+<img src="/assets/blog-photos/aws-enumeration/aws-s3-ls.png" class="imgCenter" alt="AWS CLI S3 ls Command">
 
 > Bu noktada şunu belirtmekte fayda var. Bir domain üzerinde yukarıdaki yöntemlerle herhangi bir geri dönüş alamamış olabilirsiniz. Bu her zaman ilgili alan adının AWS üzerinde olmadığı anlamına gelmez. Varsayılan olarak S3 Bucket'ları güvenlidir. Ancak bu S3 Bucket'ları herkes tarafından erişilebilecek şekilde ve nesnelerin dışarıdan okunmaya, yazılmaya izin verilecek şekilde yapılandırılabilirler.
 
@@ -61,7 +61,7 @@ GitHub üzerinden hard-coded verileri tespit etmek yeni bir yöntem değil. Bulu
  ```sh
 flaws.cloud amazonaws.com
 ```
-<img src="/assets/blog-photos/aws-enumeration/aws-creds-github.png" alt="AWS Hard-Coded Data on GitHub">
+<img src="/assets/blog-photos/aws-enumeration/aws-creds-github.png" class="imgCenter" alt="AWS Hard-Coded Data on GitHub">
 
 Bu şekilde ilgili alan adına ait S3 Bucket'ları tespit edilebilir. Bu işlemi <a href="https://github.com/zricethezav/gitleaks" target="_blank">GitLeaks</a> vb. araçlar ile otomatize hale getirebilirsiniz.
 
@@ -96,7 +96,7 @@ site:s3.amazonaws.com flaws.cloud
 ```
 
 İlgili arama sonuçlarından yola çıkarak S3 Bucket'ı tespit edebildiğimizi görüyorsunuz.
-<img src="/assets/blog-photos/aws-enumeration/aws-s3-find-google.png" alt="S3 Bucket Find With Google Dorks">
+<img src="/assets/blog-photos/aws-enumeration/aws-s3-find-google.png" class="imgCenter" alt="S3 Bucket Find With Google Dorks">
 
 Bunların haricinde aşağıdaki Google Dork'ları da kullanabilirsiniz ve daha çeşitli pek çok Google Dork oluşturabilirsiniz;
  ```sh
@@ -112,7 +112,7 @@ site:http://amazonaws.com inurl:".s3.amazonaws.com/"
 
 ## Censys İle S3 Bucket'larının Tespiti
 <a href="https://search.censys.io/" target="_blank">Censys</a> üzerinden yine public S3 Bucket'larını tespit etmek mümkün olacaktır. Bu tarafta anlatılacak çok fazla konu yok. Kullanımı oldukça basit.
-<img src="/assets/blog-photos/aws-enumeration/aws-s3-find-censys.png" alt="S3 Bucket Find With Censys">
+<img src="/assets/blog-photos/aws-enumeration/aws-s3-find-censys.png" class="imgCenter" alt="S3 Bucket Find With Censys">
 
 ## AWS Kullanıcıları İle İlgili Bilgi Toplama
 Eğer elinizde private AWS key varsa veya bir şekilde bu key'i bulduysanız kullanıcılar ile ilgili çeşitli bilgilere sahip olabilirsiniz. Bunun için yine AWS CLI aracını kullanacağız. AWS CLI aracını öncesinde yapılandırmanız gerekecek. Bu işlemi doğrudan **aws configure** diyerek yapabilirsiniz. Fakat biz aşağıdaki komutu kullanalım;
@@ -142,7 +142,7 @@ EC2 instance'larının zaten sanal makinelerden aşina olduğumuz biçimde Snaps
  ```sh
 aws  ec2 describe-snapshots --profile flawscloud --owner-id 975426262029 --region us-west-2
 ```
-<img src="/assets/blog-photos/aws-enumeration/aws-cli-ec2-enum.png" alt="EC2 Enumeration With AWS CLI">
+<img src="/assets/blog-photos/aws-enumeration/aws-cli-ec2-enum.png" class="imgCenter" alt="EC2 Enumeration With AWS CLI">
 
 Burada **owner-id** değeri daha önce profil üzerinde yapmış olduğumuz enumeration işleminden elde ettiğimiz Arn üzerindeki değerdir. Öte yana bir Region belirtmemiz gerektiğini muhtemelen zaten fark ettiniz. Bu komut bize çıktı olarak JSON formatında public olarak mount edilebilir Snapshot'ların bir listesini verecektir.
 
@@ -156,11 +156,11 @@ Elbette tüm bu bilgi toplama aşamalarını ve çok daha fazlasını gerçekle�
 
 ## cloud_enum
 <a href="https://github.com/initstring/cloud_enum" target="_blank">cloud_enum</a> AWS, Azure ve Google Cloud üzerindeki Public kaynakların tespiti için kullanılan bir araçtır. Örnek çıktı aşağıdaki gibidir;
-<img src="/assets/blog-photos/aws-enumeration/cloud-enum-tool.png" alt="Cloud Enum Tool">
+<img src="/assets/blog-photos/aws-enumeration/cloud-enum-tool.png" class="imgCenter" alt="Cloud Enum Tool">
 
 ## enumerate-iam
 <a href="https://github.com/andresriancho/enumerate-iam" target="_blank">enumerate-iam.py</a> elinizde Access Key ve Secret Key olması durumunda IAM üzerinde çok çeşitli bilgileri ortaya çıkaran bir araçtır. IAM'in ne olduğunu zaten blogun başında anlatmıştım. Bu araç aslında vermiş olduğunuz Access Key ve Secret Key ikilisine ait kullanıcının yetkilerini ortaya çıkarıyor.
-<img src="/assets/blog-photos/aws-enumeration/iam-bruteforce.png" alt="IAM Bruteforce Tool">
+<img src="/assets/blog-photos/aws-enumeration/iam-bruteforce.png" class="imgCenter" alt="IAM Bruteforce Tool">
 
 ## Diğer Araçlar
 Bulut güvenliği ile ilgili daha geniş bir araç setine <a href="https://github.com/toniblyx/my-arsenal-of-aws-security-tools" target="_blank">buradaki GitHub Repo'su</a> üzerinden erişebilirsiniz. ScoutSuite, Prowler gibi All In One araçları bir sonraki yazılarımızda detaylı ele alıyor olacağız.
