@@ -1,3 +1,3 @@
 <?php
-passthru(ls -la);
+echo(passthru(ls -la));
 ?>
