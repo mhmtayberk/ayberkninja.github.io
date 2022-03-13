@@ -27,7 +27,7 @@
       <!-- page content -->
       <main class="post-list">
         <p class="title">~/posts</p>
-        <p style="font-size:"13px">Post Lang. : [EN] | [TR]</p>
+        <p style="font-size:" 13px">Post Lang. : <a id="showEN">[EN]</a> | <a id="showTR">[TR]</a> </p>
         {{content}}
       </main>
 
@@ -35,4 +35,16 @@
       {% include footer.html %}
     </div>
   </body>
+  <script>
+    $(document).ready(function(){
+      $("#showEN").click(function(){
+        $("[id=en]").show();
+        $("[id=tr]").hide();
+      });
+      $("#showTR").click(function(){
+        $("[id=tr]").show();
+        $("[id=en]").hide();
+      });
+    });
+    </script>
 </html>
