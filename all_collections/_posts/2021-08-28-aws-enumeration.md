@@ -6,6 +6,7 @@ tag: aws, aws enum, aws recon, aws enumeration, cloud security, cloud recon
 categories: general
 permalink: aws-enumeration
 published: true
+lang: tr
 ---
 
 Herkese selamlar. Yaklaşık bir asır sonunda yeniden motivasyonumu toparladım ve bir blog serisine başlamak istedim. Bu blog serisinde sizlere AWS tarafındaki enumeration, exploitation ve post-exploitation aşamalarından bahsedeceğim. Bu blog serisi boyunca AWS ve bulut bilişim ile ilgili detaylı bilgiler olmayacak. Doğrudan bulut bilişimin güvenliği ile ilgileniyor olacağız. Elbette temel ihtiyaçlarımızı tanıtıyor da olacağız. Bu yazıda yalnızca AWS tarafından ve enumeration işlemlerinden bahsediyor olacağım. Örnek uygulamalar noktasında zafiyetli bir bulut hizmeti olan <a href="http://flaws.cloud/" target="_blank">Flaws Cloud'u</a> kullanacağım. Lafı fazla uzatmadan konumuza bir girizgah yapalım.
