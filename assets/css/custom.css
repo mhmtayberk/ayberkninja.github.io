@@ -108,5 +108,6 @@ footer {
 }
 
 span:hover{
-	color:#08CACA
+	color:#08CACA;
+	cursor: pointer;
 }
