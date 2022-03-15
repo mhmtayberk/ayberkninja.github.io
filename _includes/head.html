@@ -78,5 +78,19 @@
             $("[id=en]").hide();
           });
         });
+
+        document.getElementById('tr').onclick = changeColor;   
+
+function changeColor() {
+    document.body.style.color = "#08CACA";
+    return false;
+}  
+
+document.getElementById('en').onclick = changeColor;   
+
+function changeColor() {
+    document.body.style.color = "#08CACA";
+    return false;
+}  
         </script>
 </head>
