@@ -41,11 +41,11 @@ You can install the second template directly from <a href="https://console.aws.a
 
 There is no need to explain each setting in this area one by one. Clear explanations have already been made. I just continued by changing the **InstanceType** value under EC2 Parameters from t2.small to t2.micro. You can also change other settings according to your preference. If this resulted in CREATE_COMPLETE on the stack, great! We can continue on our way.
 
-<img src="/assets/blog-photos/s3-antivirus/s3-av-stack-complete.png" class=“imgCenter” alt=“Stack Installation Complete”>
+<img src="/assets/blog-photos/s3-antivirus/s3-av-stack-complete.png" class="imgCenter" alt=“Stack Installation Complete”>
 
 Now we need to make some settings from the S3 Bucket that we want to be scanned. I created a test Bucket named s3-virus-scan-bucket in the same Region. In case a new object is uploaded to this Bucket, we need to create a new Event so that it can be scanned and the relevant actions can be taken. For this, we click the "Create event notification" button from the **Event Notification** field under the **Properties** tab. In the **Event Type** field, you need to select the "All object create event" option. In the **Destination** field, you have to choose SQS Queue and choose the **non-DLQ** option at the end. You can see this area in the picture below.
 
-<img src="/assets/blog-photos/s3-antivirus/s3-av-s3-event-sqs.png" class=“imgCenter” alt=“S3 Bucket SQS Event”>
+<img src="/assets/blog-photos/s3-antivirus/s3-av-s3-event-sqs.png" class="imgCenter" alt=“S3 Bucket SQS Event”>
 
 You can record the Event without making any other settings. From this point on, every object uploaded to the relevant S3 Bucket will be first scanned by ClamAV, if there is no harmful content, the relevant file will be stored in the Bucket, if there is any harmful content, the relevant file will be deleted.
 
@@ -54,11 +54,11 @@ Finally, let's make the relevant settings to receive e-mail notification via SNS
 ### Test
 Everything is ready now. We can test the system. For this, I upload a harmless txt file called justAtxt and two file called malware.ex_ and AzorultPasswordStealer.bin which is known to be harmful. The malware.ex_ file is a file belonging to the Stuxnet malware and the AzorultPasswordStealer.bin file is a file belonging to the Azorult Stealer. So they are quite popular.
 
-<img src="/assets/blog-photos/s3-antivirus/s3-av-files-upload.png" class=“imgCenter” alt=“S3 File Upload”>
+<img src="/assets/blog-photos/s3-antivirus/s3-av-files-upload.png" class="imgCenter" alt=“S3 File Upload”>
 
 Just a few seconds after uploading the relevant files, I see that I receive mail via SNS.
 
-<img src="/assets/blog-photos/s3-antivirus/s3-av-sns-mail.png" class=“imgCenter” alt=“Malicious File Mail Notification”>
+<img src="/assets/blog-photos/s3-antivirus/s3-av-sns-mail.png" class="imgCenter" alt=“Malicious File Mail Notification”>
 
 In addition, when we look at the S3 Bucket, where we upload the files, we see that the related files have been deleted, but our harmless file is still with us. While installing the CloudFormation Template, you can specify settings such as not deleting the uploaded files even though they are harmful, scanning only, notifying them by mail, and tagging harmful files.
 
@@ -68,7 +68,7 @@ While researching on this subject, I came across a very nice open-source project
 ## Detection of Malicious File Uploaded to S3 Buckets with Trend Micro Cloud One
 Trend Micro Cloud One is a paid solution. You can use Trend Micro Cloud One Yu not only to scan files uploaded to S3 Buckets but also as a security solution at many points related to your cloud environments. I cannot give a positive or negative comment as I have not used this product except for a few PoCs and demos. I wanted to include it in the scope of Blogpost as it provides a solution to our problem. Briefly, the working structure of Cloud One is explained in the image below. (Screenshot taken from Trend Micro documentation.)
 
-<img src="/assets/blog-photos/s3-antivirus/trend-micro-cloud-one-s3-av.png" class=“imgCenter” alt=“Trend Micro Cloud One S3 Antivirus”>
+<img src="/assets/blog-photos/s3-antivirus/trend-micro-cloud-one-s3-av.png" class="imgCenter" alt=“Trend Micro Cloud One S3 Antivirus”>
 
 In addition, the Cloud One platform has a wider variety of capabilities. You can find detailed information <a href="https://aws.amazon.com/blogs/apn/amazon-s3-malware-scanning-using-trend-micro-cloud-one-and-aws-security-hub/" target="_blank">here</a>.
 
@@ -90,7 +90,7 @@ Since it has very detailed documentation, it can be easily installed and used.
 ## Detection of Malicious File Uploaded to S3 Buckets ClamAV and CDK
 While doing my research, I came across a <a href="https://aws.amazon.com/blogs/developer/virus-scan-s3-buckets-with-a-serverless-clamav-based-cdk-construct/" target="_blank">blogpost</a> from AWS. By using aws-cdk it satisfies the need we mentioned. You can find detailed information in the related blog post. The working logic is illustrated in the image below.
 
-<img src="/assets/blog-photos/s3-antivirus/serverless-clamscan.png" class=“imgCenter” alt=“Serverless ClamScan”>
+<img src="/assets/blog-photos/s3-antivirus/serverless-clamscan.png" class="imgCenter" alt=“Serverless ClamScan”>
 
 ## Feedback
 In addition to all these, I recommend you to follow the steps in the <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html" target="_blank">Security Best Practices for Amazon S3</a> document published by Amazon. This was the first article I wrote in English. So, if there are points that I have mistranslated, please do not be offended. You can contact me through any channel on any technical and/or non-technical issue.
