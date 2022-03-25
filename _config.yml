@@ -3,9 +3,6 @@ markdown: kramdown
 url: "ayberk.ninja"
 baseurl: ""
 
-kramdown:
-  parse_block_html: true
-
 plugins:
   - jekyll-paginate
   - jemoji
