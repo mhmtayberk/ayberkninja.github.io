@@ -89,14 +89,14 @@ Now that we have done our preliminary preparation, we can return to the Incident
 - Automatically create incidents with EventBridge events
 - Manually create incidents
 
-In this article, I will talk about how to start an Incident manually via CloudWatch.
+In this article, I will talk about how to start an Incident manually and automaticly via CloudWatch.
 
 #### Manually Create Incidents
 Starting an Incident manually is quite easy and does not require much information. Click the "Start Incident" button on the Incident Manager dashboard. Select the Response Plan we prepared before and optionally give a title to the Incident and determine its Impact. Immediately afterward, the Incident is started by clicking the "Start" button.
 
 <img src="/assets/blog-photos/incident-response-on-aws/manually-incident-starting.png" class="imgCenter" alt="AWS Incident Manager - Manually Incident Starting">
 
-#### Automatically Creat Incidents With CloudWatch Alarms
+#### Automatically Start Incidents With CloudWatch Alarms
 With CloudWatch, we can track metrics and ensure that cases are automatically created in line with the conditions we want. For this, you must first create an Alarm from the CloudWatch panel. When creating an alarm, select Create Incident under **Systems Manager Action** menu and then select Response Plan to create an alarm.
 
 <img src="/assets/blog-photos/incident-response-on-aws/cloudwatch-incident-starting.png" class="imgCenter" alt="AWS CloudWatch Incident Starting">
