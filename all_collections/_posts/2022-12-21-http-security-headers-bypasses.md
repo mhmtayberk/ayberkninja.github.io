@@ -9,7 +9,7 @@ published: true
 lang: tr
 ---
 
-Herkese selamlar. 2022 yılının son blogpost'unu yıl sona ermeden yazmak ve yayınlamak istedim. Blogumda şuana dek AWS güvenliği üzerine odaklı yazılar yayınlamış olsamda aslında ele almak istediğim kapsam daha geniş. Bu noktada bugün daha farklı bir konuya değinmek istedim. Hepimizin aşina olduğu HTTP güvenlik başlıklarının çeşitli senaryolarda nasıl atlatılabildiği (bypass) üzerine bir blogpost olacak. Bu noktada bu güvenlik başlıklarının ne olduklarına ve nasıl çalıştıklarına detaylıca değinmeyeceğim. Eğer bu noktada eksik olduğunuzu düşünüyorsanız bu blogpost'u okumadan önce HTTP güvenlik başlıklarını kısaca araştırmanızı şiddetle tavsiye ediyorum. Son olarak bu blogpost'un amacının HTTP güvenlik başlıklarına Deep Dive bakış yapmak olmadığını ve daha önce yayınlanmamış yöntemleri içermediğini belirtmeliyim. Web güvenliğine meraklı kişilerin elinin altında derli toplu bir kaynak olması amaçlanmaktadır.
+Herkese selamlar. 2022 yılının son blogpost'unu yıl sona ermeden yazmak ve yayınlamak istedim. Blogumda şuana dek AWS güvenliği üzerine odaklı yazılar yayınlamış olsamda aslında ele almak istediğim kapsam daha geniş. Bu noktada bugün daha farklı bir konuya değinmek istedim. Hepimizin aşina olduğu HTTP güvenlik başlıklarının çeşitli senaryolarda nasıl atlatılabildiği (bypass) üzerine bir blogpost olacak. Bu noktada bu güvenlik başlıklarının ne olduklarına ve nasıl çalıştıklarına detaylıca değinmeyeceğim. Eğer bu konuda eksik olduğunuzu düşünüyorsanız bu blogpost'u okumadan önce HTTP güvenlik başlıklarını kısaca araştırmanızı şiddetle tavsiye ediyorum. Son olarak bu blogpost'un amacının HTTP güvenlik başlıklarına Deep Dive bakış yapmak olmadığını ve daha önce yayınlanmamış yöntemleri içermediğini belirtmeliyim. Web güvenliğine meraklı kişilerin elinin altında derli toplu bir kaynak olması amaçlanmaktadır.
 
 ## HttpOnly Flag'inin Atlatılması
 Öncelikle söylemekte fayda var ki bu blogpost'ta anlatılan yöntemler senaryo bağımlı olabilmektedir. Buda her ortamda her durumda buradaki yöntemlerin çalışmayacağı anlamına gelir. Bilinen birden fazla bypass yöntemi bulunmaktadır. Bunlar:
@@ -18,7 +18,7 @@ Herkese selamlar. 2022 yılının son blogpost'unu yıl sona ermeden yazmak ve y
 * Cookie Jar Overflow
 
 ### HttpOnly Bypass via PHPInfo File
-Bu bypass yöntemindeki mantık özünde oldukça basittir. HttpOnly flag'ı ile işaretlenmiş bir Cookie değeri varsa bu değeri XHR vb. metotlar ile elde etmek mümkün değildir. Fakat zafiyetli sitede PHPInfo dosyası unutulmuş ise ve bu dosyaya erişimimizde herhangi bir kısıtlama yoksa HttpOnly flag'ını bypasslamak mümkün oluyor. Şöyle ki PHPInfo dosyası bilindiği gibi PHP'nin durumu ile ilgili çok geniş bilgileri (konfigürasyon ayarları, sürüm bilgileri, environment bilgileri, ortam değişkenleri vs.) tarafımıza sunan bir fonksiyondur. Burada duruma bağlı olarak Header bilgileri de plaintext bir şekilde ekrana basılmaktadır.
+Bu bypass yöntemindeki mantık özünde oldukça basittir. Bildiğiniz üzere HttpOnly flag'ı ile işaretlenmiş bir Cookie değeri varsa bu değeri XHR vb. metotlar ile elde etmek mümkün değildir. Fakat zafiyetli sitede PHPInfo dosyası unutulmuş ise ve bu dosyaya erişimimizde herhangi bir kısıtlama yoksa HttpOnly flag'ını bypasslamak mümkün oluyor. Şöyle ki PHPInfo dosyası bilindiği gibi PHP'nin durumu ile ilgili çok geniş bilgileri (konfigürasyon ayarları, sürüm bilgileri, environment bilgileri, ortam değişkenleri vs.) tarafımıza sunan bir fonksiyondur. Burada duruma bağlı olarak Header bilgileri de plaintext bir şekilde ekrana basılmaktadır.
 
 <img src="/assets/blog-photos/http-security-headers-bypasses/phpinfo-file-details.png" class="imgCenter" alt="PHPInfo Details" />
 
@@ -84,7 +84,7 @@ Content-Security-Policy HTTP başlığının yanlış konfigüre edilmesinden ka
 * base-uri Direktifinin Bulunmaması Durumu
 
 ### Wildcard
-Wildcard yani asterisk sembolü (*) bilgisayar bilimlerinde hemen her alanda aynı anlama gelmektedir sanıyorum. Bu karakter tümü anlamına gelmektedir. Bir öncek ile açıklamamız gerekirse ***.ayberk.ninja** şeklinde bir tanımlama yaparsak bu tüm subdomainleri kapsadığı anlamına gelecektir.
+Wildcard yani asterisk sembolü (*) bilgisayar bilimlerinde hemen her alanda aynı anlama gelmektedir sanıyorum. Bu karakter tümü anlamına gelmektedir. Bir örnek ile açıklamamız gerekirse ***.ayberk.ninja** şeklinde bir tanımlama yaparsak bu tüm subdomainleri kapsadığı anlamına gelecektir.
 
 ```http
 Content-Security-Policy: script-src self https://*.ayberk.ninja; img-src *
@@ -113,7 +113,12 @@ Bir HTML belgesinin içerisinde tanımlanmış CSS satırlarına inline CSS, JS 
 Content-Security-Policy: script-src https://google.com 'unsafe-inline'; 
 ```
 
-Bu direktifte doğrudan **"/><script>alert(1);</script>** gibi bir payload çalışacaktır. Demo ortamında örneğimizi incelemek için <a href="https://brutelogic.com.br/csp/csp-unsafe-inline.php?p=%3Csvg%20onload=alert(1337)%3E" target="_blank">Brute Logic'in CSP Lab'ını</a> kullandım. Sayfanın kaynak kodunu aşağıdaki görselde görmektesiniz.
+Bu direktifte doğrudan aşağıdaki gibi bir payload çalışacaktır.
+ ```js
+"/><script>alert(1);</script>
+```
+
+Demo ortamında örneğimizi incelemek için <a href="https://brutelogic.com.br/csp/csp-unsafe-inline.php?p=%3Csvg%20onload=alert(1337)%3E" target="_blank">Brute Logic'in CSP Lab'ını</a> kullandım. Sayfanın kaynak kodunu aşağıdaki görselde görmektesiniz.
 
 <img src="/assets/blog-photos/http-security-headers-bypasses/unsafe-inline-source-code.png" class="imgCenter" alt="unsafe-inline Lab - Source Code" />
 
