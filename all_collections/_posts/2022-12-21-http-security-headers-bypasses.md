@@ -203,6 +203,40 @@ server {
         }
 }
 ```
+## X-XSS-Protection Header Bypass
+Söz konusu zafiyet eğer XSS ise gün geçmiyor ki yeni bir payload, yeni bir güvenlik çözümleri için bypass yöntemi ortaya çıkmasın. Ben bu noktada hepimizin yakından bildiği X-XSS-Protection HTTP başlığının CRLF Injection ile nasıl atlatılabileceğinden bahsetmek istiyorum.
+
+### X-XSS-Protection Bypass via CRLF Injection
+CRLF Injection zafiyetinde HTTP yanıtını bölerek Body ve/veya Header ekleyebildiğimiz biliyoruz. Buradaki zafiyette de tam olarak bu durum söz konusu. Güvenli sayılan bir X-XSS-Protection yapısı normalde şu şekildedir:
+```http
+X-XSS-Protection: 1; mode=block
+```
+
+Eğer CRLF Injection zafiyeti yardımıyla **X-XSS-Protection: 0;** tanımını yapabilirsek ve Body'de XSS Payload'umuzu gönderirsek ne olur? Şanslıysak X-XSS-Protection başlığını bypasslayabiliriz. Aşağıdaki URI'ı inceleyelim.
+```http
+http://example.com/%0d%0aContent-Length:35%0d%0aX-XSS-Protection:0%0d%0a%0d%0a23%0d%0a<svg%20onload=alert(document.domain)>%0d%0a0%0d%0a/%2f%2e%2e
+```
+
+Burada olanlara biraz daha yakından bakacak olursak CR(%0d) ve LF(%0a) karakterleri ile **Content-Length:35** ve **X-XSS-Protection:0** HTTP başlıkları eklenmekt. Ardından XSS payload'umuz yani **<svg onload=alert(document.domain)>** 'i ekliyoruz. Burada dikkat etmemiz gereken nokta ise Content-Length değerinin Payload'umuzun karakter sayısına eşit olarak set edilmesidir. Son durumunda HTTP isteği şu şekilde olacaktır:
+```ruby
+HTTP/1.1 200 OK
+Date: Tue, 20 Dec 2022 01:33:70 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 22907
+Connection: close
+X-Frame-Options: SAMEORIGIN
+Last-Modified: Tue, 20 Dec 2022 13:37:00 GMT
+ETag: "842fe-597b-54415a5c97a80"
+Vary: Accept-Encoding
+Content-Length:35
+X-XSS-Protection:0
+
+23
+<svg onload=alert(document.domain)>
+0
+```
+
+Bu noktada X-XSS-Protection HTTP başlığını atlatmış ve Reflected XSS zafiyetini tetiklemiş olacağız. Unutmamalıyız ki aynı yöntem ile CSP gibi farklı güvenlik başlıkları da atlatılabilmekte.
 
 ## Geri Bildirim
 HTTP güvenlik başlıklarının nasıl atlatılabileceğini anlattığım blog yazısı bu kadardı. Herhangi bir geri bildiriminiz olması durumunda benimle herhangi bir iletişim kanalı (Twitter, Threema vb.) üzerinden iletişime geçebilirsiniz. Geri bildirimleriniz üzerine blog yazılarını ivedi olarak güncellemekteyim. Son olarak güncelliğini yitirmiş atlatma yöntemlerini de ele almamın sebebi işin çıkış noktalarını daha iyi kavramanız ve tarihçesini de bilmenizi istemem idi.
