@@ -1,1 +1,1 @@
-alert(document.cookie)
+var test = alert(document.cookie);
