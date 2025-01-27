@@ -11,7 +11,7 @@ lang: en
 
 # Managing Security Alarms with Automation in AWS
 ## TLDR;
-Automated detection of security threats and taking necessary actions are some of the most important key points today. With the attack surface expanding day by day, the topics that need to be checked regularly are also increasing. At this point, it is critical to build, design, and maintain automated systems as well as manual controls and human power. AWS has various security services that allow us to perform some security checks on a regular basis. Using these services more efficiently depends on the architecture we will design depending on the structure of our organization. In this blog post, I will take some security alarms that we think may be harmful in AWS by using AWS's security services and take automatic actions thanks to Lambda.
+Automated detection of security threats and taking necessary actions are among the most important aspects. As the attack surface expands daily, the number of topics requiring regular monitoring also increases. At this point, it is critical to build, design, and maintain automated systems as well as manual controls and human power. AWS has various security services that allow us to perform some security checks on a regular basis. Using these services more efficiently depends on the architecture we will design depending on the structure of our organization. In this blog post, I will take some security alarms that we think may be harmful in AWS by using AWS's security services and take automatic actions thanks to Lambda.
 
 ## What Will We Automate?
 - Detection and Automated Action of AWS CloudTrail Deactivation
@@ -27,7 +27,7 @@ Automated detection of security threats and taking necessary actions are some of
 - IAM High Authority Role Monitoring
 - And much more
 
-### Detection and Automated Action of AWS CloudTrail Deactivation
+### Detecting and Automating Responses to AWS CloudTrail Deactivation
 When attackers gain unauthorized access through the interface or CLI, there are some steps they will take. One of them will be to erase the traces they have left behind. The first method they will try for this will be to deactivate CloudTrail if it is active. In this example, we will check whether CloudTrail is active or not in an automated way and reactivate it if it is deactivated. Of course, the task of activating CloudTrail also falls to our automation.
 
 My goal here is to give you an overview of how you can build mini security automations in AWS, rather than having you do these examples in person.
