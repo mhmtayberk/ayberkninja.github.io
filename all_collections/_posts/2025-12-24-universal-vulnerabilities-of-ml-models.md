@@ -35,6 +35,7 @@ It is the format used by the PyTorch library to store model weights and sometime
 - **model_folder/archive/version:** It is a text file that maintains the serialization protocol version.
 - **model_folder/archive/byteorder:** This file indicates whether the data is stored in “little-endian” or “big-endian” format.
  > If the model is saved using **torch.jit.save()**, the structure changes to accommodate TorchScript. In this case, you will find a **code/** folder containing the serialized Python code of the model's architecture. This is used to run models in environments without a Python interpreter (like C++).
+
 <img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/unzipping-pth-file-structure.png" class="imgCenter" alt="PTH File's Structure - Unzipped">
 
 ### .joblib (Joblib File)
@@ -52,6 +53,7 @@ The PyTorch team is aware of this risk, so they finally made the weights_only=Tr
 
 - **Legacy Code:** Millions of lines of old code still use older PyTorch versions or set this parameter to False for compatibility.
 - **The “Fix” Reflex:** The developer encounters this error while trying to load a custom layer they wrote. As a solution, they apply the first recommendation they find online: **weights_only=False**.
+
 <img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/pytorch-safe-belt.png" class="imgCenter" alt="PyTorch's Safe Belt">
 
 > In this blog post, you will also see some evasion techniques shortly. These are examples provided to help you change your perspective a bit. While they can bypass some security products, this is a more comprehensive topic and not the subject of today's discussion. We must remember that this is a cat-and-mouse game. My goal in this blog post is not to show you how to bypass EDR tools, etc.
@@ -78,9 +80,11 @@ torch.save(LoudModel(), "loud_exploit.pth")
 ```
 
 When you load this file with weights_only=False on the victim side, you will see that the command works. However, this method is immediately detected by simple static analysis tools such as Hugging Face's **picklescan** tool. This is because the file explicitly references os.system.
+
 <img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/loud-payload-strings.png" class="imgCenter" alt="PTH File's String Analysis">
 
 When we push this unsafe PTH file to Hugging Face, you can see that it labels the file as unsafe.
+
 <img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class="imgCenter" alt="HuggingFace Unsafe Labelling">
 
 ### Phase 2: Stealth Way
@@ -234,6 +238,7 @@ Of course, we haven't reinvented the wheel in this blog post. Beyond the technic
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
+
 
 
 
