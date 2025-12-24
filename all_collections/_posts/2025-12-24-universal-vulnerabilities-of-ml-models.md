@@ -49,7 +49,7 @@ This blog post will include examples using PyTorch and Scikit-Learn, but the sco
 
 
 ## PyTorch: The weights_only Illusion
-The PyTorch team is aware of this risk, so they finally made the weights_only=True parameter the default in version 2.6. In theory, this is a “safety belt.” If your loaded file contains anything other than tensors (numbers), PyTorch throws an error and stops the process. However, in the real world, things may not always go as we wish.
+The PyTorch team is aware of this risk, so they finally made the weights_only=True parameter the default in version 2.0. In theory, this is a “safety belt.” If your loaded file contains anything other than tensors (numbers), PyTorch throws an error and stops the process. However, in the real world, things may not always go as we wish.
 
 - **Legacy Code:** Millions of lines of old code still use older PyTorch versions or set this parameter to False for compatibility.
 - **The “Fix” Reflex:** The developer encounters this error while trying to load a custom layer they wrote. As a solution, they apply the first recommendation they find online: **weights_only=False**.
@@ -227,6 +227,45 @@ To fill that massive gap on the Scikit-Learn (Joblib) side, Hugging Face develop
 ### Signed Models
 In a corporate MLOps pipeline, models should not only be scanned; the concept of Signed Models should also be implemented. Only allowing models signed with the organization's own key to enter the Production environment is the most definitive way to prevent potential Supply Chain Attacks from outside sources.
 
+### Fickling
+Static scanners (such as HuggingFace PickleScan) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
+
+One of Fickling's most powerful features is that it provides a whitelist-based security hook for pickle loads. This feature allows safe imports from ML libraries while blocking all other calls.
+
+#### Usage Example on Codebase
+```python
+import fickling
+import pickle
+
+# 1. METHOD: Secure all pickle.load() calls
+fickling.always_check_safety() # Bu satırdan sonra TÜM pickle.load() kontrolden geçer
+
+try:
+    with open("model.pth", "rb") as f:
+        model = pickle.load(f)  # Fickling will perform an automatic scan here.
+except fickling.UnsafeFileError:
+    print("Detected unsecure file!")
+
+# 2. METHOD: Check and upload only a specific file
+try:
+    model = fickling.load("model.pth")  # Use fickling directly instead of pickle.load()
+except fickling.UnsafeFileError as e:
+    print(f"Unsecure file: {e.info}")
+```
+
+#### Usage Example with CLI
+```bash
+# Check whether a file is secure
+fickling --check-safety -p data.pkl
+
+# Safely view the execution trace of the Pickle virtual machine
+fickling --trace data.pkl
+```
+
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/fickling-cli-example.png" class="imgCenter" alt="HuggingFace picklescan Bypass Example">
+
+For more detailed information about Fickling, you can check out the <a href="https://github.com/trailofbits/fickling" target="_blank">GitHub repository.</a>
+
 
 
 ## Last Word
@@ -238,6 +277,7 @@ Of course, we haven't reinvented the wheel in this blog post. Beyond the technic
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
+
 
 
 
