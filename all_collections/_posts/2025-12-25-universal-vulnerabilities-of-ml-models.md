@@ -35,7 +35,7 @@ It is the format used by the PyTorch library to store model weights and sometime
 - **model_folder/archive/version:** It is a text file that maintains the serialization protocol version.
 - **model_folder/archive/byteorder:** This file indicates whether the data is stored in “little-endian” or “big-endian” format.
  > If the model is saved using **torch.jit.save()**, the structure changes to accommodate TorchScript. In this case, you will find a **code/** folder containing the serialized Python code of the model's architecture. This is used to run models in environments without a Python interpreter (like C++).
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/unzipping-pth-file-structure.png" class=“imgCenter” alt=“PTH File's Structure - Unzipped”>
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/unzipping-pth-file-structure.png" class="imgCenter" alt="PTH File's Structure - Unzipped">
 
 ### .joblib (Joblib File)
 It is a Pickle variant optimized for storing large data, particularly favored by Scikit-Learn. Standard Pickle is very slow and consumes a significant amount of RAM when storing large NumPy arrays. Joblib loads this data much faster using memory-mapping. It is usually a single binary file. It contains both object metadata (using the Pickle protocol) and optimized data blocks. Compression support (zlib, lz4, etc.) is available.
@@ -78,10 +78,10 @@ torch.save(LoudModel(), "loud_exploit.pth")
 ```
 
 When you load this file with weights_only=False on the victim side, you will see that the command works. However, this method is immediately detected by simple static analysis tools such as Hugging Face's **picklescan** tool. This is because the file explicitly references os.system.
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/loud-payload-strings.png" class=“imgCenter” alt=“PTH File's String Analysis”>
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/loud-payload-strings.png" class="imgCenter" alt="PTH File's String Analysis">
 
 When we push this unsafe PTH file to Hugging Face, you can see that it labels the file as unsafe.
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class=“imgCenter” alt=“HuggingFace Unsafe Labelling”>
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class="imgCenter" alt="HuggingFace Unsafe Labelling">
 
 ### Phase 2: Stealth Way
 In a real attack, our goal is to blind static analysis tools (Hugging Face PickleScan, etc.). The way to do this is to remove the threat from the Metadata (Pickle) section and hide it within the model's Mathematical Weights (Weights/Bias). I would like to reiterate that the purpose of this article is not to try to bypass security products.
@@ -133,7 +133,7 @@ torch.save(model, "logic_bomb.pth")
 print("[+] Logic Bomb saved as 'logic_bomb.pth'.")
 ```
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-picklescan-bypass.png" class=“imgCenter” alt=“HuggingFace picklescan Bypass Example”>
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-picklescan-bypass.png" class="imgCenter" alt="HuggingFace picklescan Bypass Example">
 
 > For torch.load to work, the victim’s environment must have the LogicBombModel class defined; otherwise, it will trigger an AttributeError. In a real-world scenario, attackers bypass this by bundling the model with a "necessary" helper script (Social Engineering) or by injecting the malicious class into legitimate libraries via supply chain attacks.
 
@@ -230,6 +230,7 @@ As the world has been exploring the world of AI in recent years, new security me
 
 
 Of course, we haven't reinvented the wheel in this blog post. Beyond the technical details, I've tried to support a shift in mindset. 
+
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
