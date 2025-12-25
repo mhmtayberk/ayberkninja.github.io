@@ -13,7 +13,7 @@ lang: en
 ## TLDR;
 2025 was a year spent understanding AI, using it correctly, and adapting to the wave of new security approaches entering our lives. The world is still catching up, and we are all learning—reading, testing, and failing forward.
 
-In this post, I’ll show you how the models we download from platforms like HuggingFace for 'fine-tuning' can actually be malicious delivery vehicles. We won't just talk about theory; we’re going hands-on with Insecure Deserialization. I’ll demonstrate how to bypass PyTorch's latest security layers, how to hide payloads within model weights to stay under the radar of SAST/EDR, and why Scikit-Learn remains a wide-open playground for attackers. Let's see how deep the rabbit hole goes."
+In this post, I’ll show you how the models we download from platforms like HuggingFace for 'fine-tuning' can actually be malicious delivery weapons. We won't just talk about theory; we’re going hands-on with Insecure Deserialization. I’ll demonstrate how to bypass PyTorch's latest security layers, how to hide payloads within model weights to stay under the radar of SAST/EDR, and why Scikit-Learn remains a wide-open playground for attackers. Let's see how deep the rabbit hole goes."
 
 ## The Core Problem: Models Are Executable
 Model files such as .pth, .pkl, and .joblib do not consist solely of static data. When you save a model to disk, you are not just writing the weight matrices to a table. Using Python's Pickle (or similar) mechanism, you serialize and store that model object. When you load the model back (using torch.load or joblib.load), what actually happens is not a data read operation, but the deserialization of that object.
@@ -277,6 +277,7 @@ Of course, we haven't reinvented the wheel in this blog post. Beyond the technic
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
+
 
 
 
