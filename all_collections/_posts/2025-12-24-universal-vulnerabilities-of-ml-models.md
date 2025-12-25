@@ -13,7 +13,7 @@ lang: en
 ## TLDR;
 2025 was a year spent understanding AI, using it correctly, and adapting to the wave of new security approaches entering our lives. The world is still catching up, and we are all learning—reading, testing, and failing forward.
 
-In this post, I’ll show you how the models we download from platforms like HuggingFace for 'fine-tuning' can actually be malicious delivery weapons. We won't just talk about theory; we’re going hands-on with Insecure Deserialization. I’ll demonstrate how to bypass PyTorch's latest security layers, how to hide payloads within model weights to stay under the radar of SAST/EDR, and why Scikit-Learn remains a wide-open playground for attackers. Let's see how deep the rabbit hole goes."
+In this post, I’ll show you how the models we download from platforms like Hugging Face for 'fine-tuning' can actually be malicious delivery weapons. We won't just talk about theory; we’re going hands-on with Insecure Deserialization. I’ll demonstrate how to bypass PyTorch's latest security layers, how to hide payloads within model weights to stay under the radar of SAST/EDR, and why Scikit-Learn remains a wide-open playground for attackers. Let's see how deep the rabbit hole goes."
 
 ## The Core Problem: Models Are Executable
 Model files such as .pth, .pkl, and .joblib do not consist solely of static data. When you save a model to disk, you are not just writing the weight matrices to a table. Using Python's Pickle (or similar) mechanism, you serialize and store that model object. When you load the model back (using torch.load or joblib.load), what actually happens is not a data read operation, but the deserialization of that object.
@@ -85,7 +85,7 @@ When you load this file with weights_only=False on the victim side, you will see
 
 When we push this unsafe PTH file to Hugging Face, you can see that it labels the file as unsafe.
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class="imgCenter" alt="HuggingFace Unsafe Labelling">
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class="imgCenter" alt="Hugging Face Unsafe Labelling">
 
 ### Phase 2: Stealth Way
 In a real attack, our goal is to blind static analysis tools (Hugging Face PickleScan, etc.). The way to do this is to remove the threat from the Metadata (Pickle) section and hide it within the model's Mathematical Weights (Weights/Bias). I would like to reiterate that the purpose of this article is not to try to bypass security products.
@@ -137,7 +137,7 @@ torch.save(model, "logic_bomb.pth")
 print("[+] Logic Bomb saved as 'logic_bomb.pth'.")
 ```
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-picklescan-bypass.png" class="imgCenter" alt="HuggingFace picklescan Bypass Example">
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-picklescan-bypass.png" class="imgCenter" alt="Hugging Face picklescan Bypass Example">
 
 > For torch.load to work, the victim’s environment must have the LogicBombModel class defined; otherwise, it will trigger an AttributeError. In a real-world scenario, attackers bypass this by bundling the model with a "necessary" helper script (Social Engineering) or by injecting the malicious class into legitimate libraries via supply chain attacks.
 
@@ -151,10 +151,10 @@ The most commonly used tool for saving Scikit-Learn models is the joblib library
 The biggest difference is this: The weights_only logic introduced with PyTorch 2.6+ is not yet standard in the Scikit-Learn world. The moment you load a .joblib file with joblib.load(), a fully-fledged Python interpreter starts running in the background.
 
 
-Using the same logic, let's quickly create one example that can be detected and one that cannot be detected after uploading to HuggingFace.
+Using the same logic, let's quickly create one example that can be detected and one that cannot be detected after uploading to Hugging Face.
 
 ### Loud Joblib
-Here, we are using os.system directly. When the joblib file is loaded, the Pickle protocol will see the posix.system call and it will be labeled as Unsafe by HuggingFace.
+Here, we are using os.system directly. When the joblib file is loaded, the Pickle protocol will see the posix.system call and it will be labeled as Unsafe by Hugging Face.
 
 ```python
 import joblib
@@ -172,7 +172,7 @@ joblib.dump(model, "loud_model.joblib")
 print("[+] Loud Joblib saved. HF will probably scream.")
 ```
 
-The HuggingFace scanner reads the Pickle bytecode inside the file and marks the file as “Unsafe” as soon as it encounters the GLOBAL posix system command.
+The Hugging Face scanner reads the Pickle bytecode inside the file and marks the file as “Unsafe” as soon as it encounters the GLOBAL posix system command.
 
 ### Stealth Joblib
 Here, we are modifying the logic we used in PyTorch a little. Scikit-Learn models do not have a forward method, but they do have a predict method. However, most people do not just load the model and leave it; they make predictions. If we don't want to be caught at load time, we should hide the eval keyword and embed the actual action inside the coefficients (coef_).
@@ -228,7 +228,7 @@ To fill that massive gap on the Scikit-Learn (Joblib) side, Hugging Face develop
 In a corporate MLOps pipeline, models should not only be scanned; the concept of Signed Models should also be implemented. Only allowing models signed with the organization's own key to enter the Production environment is the most definitive way to prevent potential Supply Chain Attacks from outside sources.
 
 ### Fickling
-Static scanners (such as <a href="https://huggingface.co/docs/hub/security-pickle" target="_blank">HuggingFace PickleScan.</a>) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
+Static scanners (such as <a href="https://huggingface.co/docs/hub/security-pickle" target="_blank">Hugging Face PickleScan.</a>) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
 
 One of Fickling's most powerful features is that it provides a whitelist-based security hook for pickle loads. This feature allows safe imports from ML libraries while blocking all other calls.
 
@@ -262,14 +262,14 @@ fickling --check-safety -p data.pkl
 fickling --trace data.pkl
 ```
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/fickling-cli-example.png" class="imgCenter" alt="HuggingFace picklescan Bypass Example">
+<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/fickling-cli-example.png" class="imgCenter" alt="Hugging Face picklescan Bypass Example">
 
 For more detailed information about Fickling, you can check out the <a href="https://github.com/trailofbits/fickling" target="_blank">GitHub repository.</a>
 
 
 
 ## Last Word
-As the world has been exploring the world of AI in recent years, new security methodologies are being developed day by day. While corporate companies are trying to keep up with this transformation, exceptions are increasing, and security points are not being given enough attention.
+As the world has been exploring the world of AI in recent years, new security methodologies are being developed day by day. While corporations are trying to keep up with this transformation, exceptions are increasing, and security points are not being given enough attention.
 
 
 Of course, we haven't reinvented the wheel in this blog post. Beyond the technical details, I've tried to support a shift in mindset. 
@@ -277,6 +277,7 @@ Of course, we haven't reinvented the wheel in this blog post. Beyond the technic
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
+
 
 
 
