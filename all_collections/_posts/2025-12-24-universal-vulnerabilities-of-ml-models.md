@@ -228,7 +228,7 @@ To fill that massive gap on the Scikit-Learn (Joblib) side, Hugging Face develop
 In a corporate MLOps pipeline, models should not only be scanned; the concept of Signed Models should also be implemented. Only allowing models signed with the organization's own key to enter the Production environment is the most definitive way to prevent potential Supply Chain Attacks from outside sources.
 
 ### Fickling
-Static scanners (such as HuggingFace PickleScan) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
+Static scanners (such as <a href="https://huggingface.co/docs/hub/security-pickle" target="_blank">HuggingFace PickleScan.</a>) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
 
 One of Fickling's most powerful features is that it provides a whitelist-based security hook for pickle loads. This feature allows safe imports from ML libraries while blocking all other calls.
 
@@ -277,6 +277,7 @@ Of course, we haven't reinvented the wheel in this blog post. Beyond the technic
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
+
 
 
 
