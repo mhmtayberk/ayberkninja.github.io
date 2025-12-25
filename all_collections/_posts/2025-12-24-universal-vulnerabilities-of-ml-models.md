@@ -238,7 +238,7 @@ import fickling
 import pickle
 
 # 1. METHOD: Secure all pickle.load() calls
-fickling.always_check_safety() # Bu satırdan sonra TÜM pickle.load() kontrolden geçer
+fickling.always_check_safety() # After this line ALL pickle.load() is checked
 
 try:
     with open("model.pth", "rb") as f:
@@ -277,6 +277,7 @@ Of course, we haven't reinvented the wheel in this blog post. Beyond the technic
 
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (LinkedIn, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.
+
 
 
 
