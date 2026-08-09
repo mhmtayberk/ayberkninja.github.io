@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ page.lang | default: site.lang }}">
   {% include head.html %}
   <body>
     <div id="indicator"></div>
@@ -21,9 +21,9 @@
       {% include nav.html %}
       <!-- page content -->
       <main class="content">
-        <p class="title">
+        <h1 class="title">
           {{page.title}} | ls: /usr/bin/hacker*: No such file or directory
-        </p>
+        </h1>
         {{content}}
       </main>
 

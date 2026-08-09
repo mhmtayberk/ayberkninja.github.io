@@ -1,10 +1,15 @@
 ---
-title: About Me
-layout: about
-short_bio: Application security engineer and security researcher.
-description: "About Mehmet Ayberk Annadınç, an application security engineer and AWS Community Builder focused on web, mobile, API, cloud and AI security."
-markdown_mirror: /about.html.md
+layout: null
+permalink: /about.html.md
+sitemap: false
 ---
+{% raw %}# About Me
+
+> About Mehmet Ayberk Annadınç, an application security engineer and AWS Community Builder focused on web, mobile, API, cloud and AI security.
+
+- Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
+- Language: English
+- Canonical: [https://ayberk.ninja/about.html](https://ayberk.ninja/about.html)
 
 I'm an Application Security Engineer at <a href="https://www.intertech.com.tr/" target="_blank" rel="noopener noreferrer">Intertech</a>, where I work on manual web, mobile and API security testing, secure development practices, source code analysis, and the use of SAST and DAST tools.
 
@@ -32,3 +37,4 @@ Muharrem Hasbi Anatolian High School - Cyber Bullying Seminar <br>
 Muharrem Hasbi Anatolian High School - Robotics Workshop Cyber Security Training
 
 You can find more about my work on <a href="https://github.com/mhmtayberk" target="_blank" rel="noopener noreferrer">GitHub</a> and <a href="https://www.linkedin.com/in/mhmtayberk/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+{% endraw %}

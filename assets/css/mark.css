@@ -45,7 +45,8 @@ h3,
 h4,
 h5,
 h6 {
-	word-break: break-all !important;
+	overflow-wrap: anywhere;
+	word-break: normal !important;
 	margin: 20px 0;
 	padding-bottom: 0.3em;
 	line-height: 1.2;

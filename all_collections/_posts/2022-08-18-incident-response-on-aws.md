@@ -1,9 +1,12 @@
 ---
 layout: post
 title: Incident Response On AWS
+description: "A practical guide to AWS incident response using Incident Manager, CloudWatch, runbooks, isolation and automated remediation."
 date: 2022-08-18
-tag: aws, cloud security, aws incident response, aws security, aws blue team
+last_modified_at: 2022-09-18T19:28:59+03:00
+tags: ["aws", "cloud security", "aws incident response", "aws security", "aws blue team"]
 categories: general
+topic: AWS Security
 permalink: incident-response-on-aws
 published: true
 lang: en
@@ -16,16 +19,16 @@ As in on-prem environments, security in cloud environments should be considered 
 In essence, no. Of course there are some differences. But it is important to remember that cloud systems are not much different from normal computer systems. Without going deeper, I should mention that I will not talk about Incident Response processes in this article. I will talk about how Incident Response processes are implemented in AWS. If you do not have basic knowledge about Incident Response, I recommend you take a break here and read a short articles about Incident Response processes.
 
 ## AWS Incident Manager
-There is a service offered by AWS that allows you to easily manage Incident Response processes. <a href="https://console.aws.amazon.com/systems-manager/incidents/home" target="_blank">Incident Manager</a>. With the Incident Manager service, you can plan your Incident Response processes, define Runbooks, send notifications to relevant teams and review incident details for up-to-date information during an incident. Incident Manager does all this by leveraging other AWS services.
+There is a service offered by AWS that allows you to easily manage Incident Response processes. <a href="https://console.aws.amazon.com/systems-manager/incidents/home" target="_blank" rel="noopener noreferrer">Incident Manager</a>. With the Incident Manager service, you can plan your Incident Response processes, define Runbooks, send notifications to relevant teams and review incident details for up-to-date information during an incident. Incident Manager does all this by leveraging other AWS services.
 
-<img src="/assets/blog-photos/incident-response-on-aws/aws-incident-manager.png" class="imgCenter" alt="AWS Incident Manager">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/aws-incident-manager.png" class="imgCenter" alt="AWS Incident Manager">
 
 Let's examine how Incident Manager is configured and how to use it.
 
 ### Setting Up Replication
 After entering Incident Manager's panel, we can start configuring it by clicking the **Set up** button under General Settings. Then let's continue by confirming the Terms and conditions.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-replication.png" class="imgCenter" alt="AWS Incident Manager Replication">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-replication.png" class="imgCenter" alt="AWS Incident Manager Replication">
 
 At this point, we make general adjustments to Incident Manager. In the Regions field, we determine in which Regions we will use Incident Manager. We need to select at least one Region. But there is no upper limit to the number of Regions we will select.
 
@@ -39,11 +42,11 @@ In the Contact details field, the name of the person who will deal with IR proce
 
 In the Contact channel field, we specify how to contact the person we specified in the Contact details field in case of a case. In this field, we can specify a communication channel via E-mail, SMS, or Voice. We can also specify more than one communication channel. My recommendation is to specify at least two communication channels. Thus, if the relevant person cannot be reached through one channel, they can be reached through the other channel.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-contact-detail.png" class="imgCenter" alt="AWS Incident Manager Contact Detail">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-contact-detail.png" class="imgCenter" alt="AWS Incident Manager Contact Detail">
 
 In the Engagement area, you can specify when to contact the relevant contact(s) in case of an incident. Note that after you have set up the contact channels, a validation will be sent for each contact channel you have set up.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-contact-verification.png" class="imgCenter" alt="AWS Incident Manager Contact Verification">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-contact-verification.png" class="imgCenter" alt="AWS Incident Manager Contact Verification">
 
 If you want to set more than one contact you have to repeat the same procedure.
 
@@ -54,7 +57,7 @@ In the Escalation plan details field you must assign a name and alias to the rel
 
 If you want to create more than one Escalation plan you should repeat the same steps.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-esc-stages.png" class="imgCenter" alt="AWS Incident Manager Escalation Stages">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-esc-stages.png" class="imgCenter" alt="AWS Incident Manager Escalation Stages">
 
 ### Setting Up Response Plan
 I think the most crucial part is the Response Plan. You can use this area to plan how to respond to incidents, determine the severity of incidents, determine which contacts to contact, select metrics to track, and determine the automated runbooks to start.
@@ -66,9 +69,9 @@ As always, we start by specifying a name and alias for the Response plan in the 
 - **Dedupe String:** Incident Manager uses the dedupe string to prevent the same root cause from creating multiple incidents in the same account. Incident Manager deduplicates Incidents created from the same CloudWatch alarm or EventBridge event into the same incident. (Source: AWS Docs.)
 - **Tags:** If you are familiar with AWS, you should be familiar with the tagging structure. Every event that starts using this response plan will have these tags. This will make it easier for you to do things like reporting.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-incident-defaults.png" class="imgCenter" alt="AWS Incident Manager Incident Defaults">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-incident-defaults.png" class="imgCenter" alt="AWS Incident Manager Incident Defaults">
 
-The chat channel field is optional but very useful. Select a chat channel for responders to interact during the case. Currently, only Slack and Chime are supported. In order to use this area, you must first configure a Chatbot Client. For more detailed information, you can review the <a href="https://docs.aws.amazon.com/chatbot/latest/adminguide/getting-started.html" target="_blank">AWS document.</a>
+The chat channel field is optional but very useful. Select a chat channel for responders to interact during the case. Currently, only Slack and Chime are supported. In order to use this area, you must first configure a Chatbot Client. For more detailed information, you can review the <a href="https://docs.aws.amazon.com/chatbot/latest/adminguide/getting-started.html" target="_blank" rel="noopener noreferrer">AWS document.</a>
 
 I explained the Engagements section in the previous chapter, so I will continue by skipping this section.
 
@@ -77,9 +80,9 @@ Runbooks allow you to automate some processes. You can create and use a Runbook,
 #### Creating A New Runbook
 Creating a new Runbook is quite easy. You need to enter a description in Markdown format and set up the Runbook steps.
 
-<img src="/assets/blog-photos/incident-response-on-aws/creating-a-runbook.png" class="imgCenter" alt="AWS Creating Runbook">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/creating-a-runbook.png" class="imgCenter" alt="AWS Creating Runbook">
 
-Again, it contains a lot of detail. For detailed information on how to create a Runbook in AWS, you can check the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-documents.html" target="_blank">AWS documentation.</a>
+Again, it contains a lot of detail. For detailed information on how to create a Runbook in AWS, you can check the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-documents.html" target="_blank" rel="noopener noreferrer">AWS documentation.</a>
 
 Finally, you can tag the Response plan you created if you want. After all these steps, you can create the Response plan with the "Create response plan" button. You can also edit and delete the Response Plan, Escalation Plan and Contacts you created later.
 
@@ -94,26 +97,26 @@ In this article, I will talk about how to start an Incident manually and automat
 #### Manually Create Incidents
 Starting an Incident manually is quite easy and does not require much information. Click the "Start Incident" button on the Incident Manager dashboard. Select the Response Plan we prepared before and optionally give a title to the Incident and determine its Impact. Immediately afterward, the Incident is started by clicking the "Start" button.
 
-<img src="/assets/blog-photos/incident-response-on-aws/manually-incident-starting.png" class="imgCenter" alt="AWS Incident Manager - Manually Incident Starting">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/manually-incident-starting.png" class="imgCenter" alt="AWS Incident Manager - Manually Incident Starting">
 
 #### Automatically Start Incidents With CloudWatch Alarms
 With CloudWatch, we can track metrics and ensure that cases are automatically created in line with the conditions we want. For this, you must first create an Alarm from the CloudWatch panel. When creating an alarm, select Create Incident under **Systems Manager Action** menu and then select Response Plan to create an alarm.
 
-<img src="/assets/blog-photos/incident-response-on-aws/cloudwatch-incident-starting.png" class="imgCenter" alt="AWS CloudWatch Incident Starting">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/cloudwatch-incident-starting.png" class="imgCenter" alt="AWS CloudWatch Incident Starting">
 
 From this moment on, an Incident will automatically occur in every situation that matches the condition you set when creating the Alarm.
 
 ### Tracking And Resolving Incidents
 You can follow the created cases from the Incident Manager dashboard. Here you can see general data about the cases, metrics, timeline, runbooks, engagements and you can edit some of them.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-incident-dashboard.png" class="imgCenter" alt="AWS Incident Manager - Incident Dashboad">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-incident-dashboard.png" class="imgCenter" alt="AWS Incident Manager - Incident Dashboad">
 
 In order to Resolve the Incident, all you need to do is to click on the "Resolve incident" button on the top left.
 
 ### Post-Incident Analysis
 After the relevant case is resolved, you can start an analysis of this case and review the issues related to improving your processes. This analysis process is done with Templates. You can create your Template or use the Template created by AWS. Analysis details include metrics, timeline, question set, actions and a checklist. Once an analysis has been created, some areas, such as the question set, can be edited later.
 
-<img src="/assets/blog-photos/incident-response-on-aws/incident-manager-incident-analysis.png" class="imgCenter" alt="AWS Incident Manager - Incident Analysis">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/incident-manager-incident-analysis.png" class="imgCenter" alt="AWS Incident Manager - Incident Analysis">
 
 ## Isolating EC2 Instances
 In the event of an incident on an EC2 Instance, it is critical to isolate that Instance from the network. The steps to be followed at this point are as follows:
@@ -131,23 +134,23 @@ In the event of an incident on an EC2 Instance, it is critical to isolate that I
 There are some open open-source toolkits created by Andrew Krug, Alex McCormack, Joel Ferrier, and Jeff Parr that streamline our Incident Response processes in cloud environments.
 
 ### Margarita Shotgun
-Margarita Shotgun is a very simple to use memory dump tool written in Python programming language. It is designed to work in AWS environments. Detailed information is available in its own <a href="https://margaritashotgun.readthedocs.io/en/latest/" target="_blank"> documentation.</a>
+Margarita Shotgun is a very simple to use memory dump tool written in Python programming language. It is designed to work in AWS environments. Detailed information is available in its own <a href="https://margaritashotgun.readthedocs.io/en/latest/" target="_blank" rel="noopener noreferrer"> documentation.</a>
 
 ### Incident Pony
 Incident Pony is a first of its kind case management and Incident Response orchestration tool specifically designed for AWS (Source: ThreatResponse).
 
 ### AWS_IR CLI
-AWS_IR CLI is the third and final Incident Response tool written by the ThreatResponse team. The purpose of the tool is to automate Incident Response processes. You can review the <a href="https://www.blackhat.com/docs/us-16/materials/us-16-Krug-Hardening-AWS-Environments-And-Automating-Incident-Response-For-AWS-Compromises-wp.pdf" target="_blank"> Black Hat document</a> about the AWS_IR tool and other tools.
+AWS_IR CLI is the third and final Incident Response tool written by the ThreatResponse team. The purpose of the tool is to automate Incident Response processes. You can review the <a href="https://www.blackhat.com/docs/us-16/materials/us-16-Krug-Hardening-AWS-Environments-And-Automating-Incident-Response-For-AWS-Compromises-wp.pdf" target="_blank" rel="noopener noreferrer"> Black Hat document</a> about the AWS_IR tool and other tools.
 
 ## Yet Another Automation
 There are many ways to automate Incident Response processes in an AWS environment. These processes can be automated with third-party tools and/or AWS's own services. At this point, it is important to choose the most suitable solution for your needs. In this blogpost, I will show you an automation that AWS describes in their Security Blog and I will also link to some other automations.
 
 The automatization we will use takes the necessary actions by following AWS GuardDuty and AWS Config controls. The architecture is as in the image below.
 
-<img src="/assets/blog-photos/incident-response-on-aws/automated-incident-response-arc.png" class="imgCenter" alt="AWS Automated Incident Response Flowchart">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/automated-incident-response-arc.png" class="imgCenter" alt="AWS Automated Incident Response Flowchart">
 
 The installation steps are quite easy. Because we don't do the installation manually. We can quickly install it with CloudFormation Stack.
-**<a href="https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=Automated-Incident-Response&templateURL=https://awsiammedia.s3.amazonaws.com/public/sample/AutomatedIncidentResponse319/master-account-main.yaml" target="_blank"> CloudFormation Stack</a>**
+**<a href="https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=Automated-Incident-Response&templateURL=https://awsiammedia.s3.amazonaws.com/public/sample/AutomatedIncidentResponse319/master-account-main.yaml" target="_blank" rel="noopener noreferrer"> CloudFormation Stack</a>**
 
 In the Stack Parameters section, it asks us for some information. These are as follows:
 - **S3 Bucket with sources:** S3 Bucket name summarizing all AWS resources used. If you cannot provide this information, you can leave it as default.
@@ -159,23 +162,23 @@ In the Stack Parameters section, it asks us for some information. These are as f
 - **Isolate EC2 Findings:** This is a list of all GuardDuty findings that should lead to an EC2 instance being isolated. 
 - **Block Printcipal Finding:** This is a list of all GuardDuty findings that should lead to blocking this role or user by attaching a deny all policy.
 
-<img src="/assets/blog-photos/incident-response-on-aws/automated-ir-stack-options.png" class="imgCenter" alt="AWS Automated Incident Response Stack Options">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/incident-response-on-aws/automated-ir-stack-options.png" class="imgCenter" alt="AWS Automated Incident Response Stack Options">
 
-After all these settings, you can start Stack. Once Stack is complete, you will now have an automated IR process. For more details, you can read the <a href="https://aws.amazon.com/blogs/security/how-to-perform-automated-incident-response-multi-account-environment/" target="_blank"> AWS Security Blog</a>.
+After all these settings, you can start Stack. Once Stack is complete, you will now have an automated IR process. For more details, you can read the <a href="https://aws.amazon.com/blogs/security/how-to-perform-automated-incident-response-multi-account-environment/" target="_blank" rel="noopener noreferrer"> AWS Security Blog</a>.
 
 ## Other Automations
 I mentioned that there are many different ways to automate Incident Response processes in AWS. At this point, you should determine the most suitable solution for you. I have linked some other automatizations in the list below.
-- <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/automate-incident-response-and-forensics.html" target="_blank"> Automate incident response and forensics (AWS Doc.)</a>
-- <a href="https://aws.amazon.com/blogs/security/how-to-automate-incident-response-in-aws-cloud-for-ec2-instances/" target="_blank"> How to automate incident response in the AWS Cloud for EC2 instances (AWS Security Blog)</a>
-- <a href="https://aws.amazon.com/blogs/security/how-to-automate-incident-response-to-security-events-with-aws-systems-manager-incident-manager/" target="_blank"> How to automate incident response to security events with AWS Systems Manager Incident Manager (AWS Security Blog)</a>
+- <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/automate-incident-response-and-forensics.html" target="_blank" rel="noopener noreferrer"> Automate incident response and forensics (AWS Doc.)</a>
+- <a href="https://aws.amazon.com/blogs/security/how-to-automate-incident-response-in-aws-cloud-for-ec2-instances/" target="_blank" rel="noopener noreferrer"> How to automate incident response in the AWS Cloud for EC2 instances (AWS Security Blog)</a>
+- <a href="https://aws.amazon.com/blogs/security/how-to-automate-incident-response-to-security-events-with-aws-systems-manager-incident-manager/" target="_blank" rel="noopener noreferrer"> How to automate incident response to security events with AWS Systems Manager Incident Manager (AWS Security Blog)</a>
 
 ## Last Word
 In this blogpost, I aimed to give you basic information about Indicent Response processes in AWS. I hope it has contributed. Please note that Incident Response processes are not limited to what is described in this document. Incident Response and DFIR processes require expertise on their own. Also make sure to do the following in Incident Response processes in AWS:
 - Create CloudWatch alarms to suit your needs and connect them with Incident Manager.
-- Follow <a href="https://aws.amazon.com/blogs/security/how-to-automate-incident-response-to-security-events-with-aws-systems-manager-incident-manager/" target="_blank"> AWS’s Security Incident Response Guide.</a>
+- Follow <a href="https://aws.amazon.com/blogs/security/how-to-automate-incident-response-to-security-events-with-aws-systems-manager-incident-manager/" target="_blank" rel="noopener noreferrer"> AWS’s Security Incident Response Guide.</a>
 - Don't forget to use AWS's other security services.
 - Set up different security accounts for use in AWS. Make sure everything is isolated and apply the Least Privilege method.
 - Establish a process that complies with NIST's Incident Response Guidelines.
-- Improve your team and yourself Incident Response processes by solving <a href="https://www.wellarchitectedlabs.com/security/quests/quest_200_incident_response_day/" target="_blank"> AWS's Well-Architected Labs</a>
+- Improve your team and yourself Incident Response processes by solving <a href="https://www.wellarchitectedlabs.com/security/quests/quest_200_incident_response_day/" target="_blank" rel="noopener noreferrer"> AWS's Well-Architected Labs</a>
 
 If you have any suggestions for the article, please feel free to contact me through any communication channel (Linkedin, Twitter, Threema, etc.). I am constantly updating the articles in line with your feedback.

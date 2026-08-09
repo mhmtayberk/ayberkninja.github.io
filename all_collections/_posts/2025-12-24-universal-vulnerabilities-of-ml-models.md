@@ -1,15 +1,17 @@
 ---
 layout: post
 title: "Beyond the Tensors: Exploring the Universal Vulnerabilities of ML Model Formats"
+description: "Explore insecure deserialization in ML model formats, PyTorch and Joblib attack paths, scanner bypasses and safer alternatives."
 date: 2025-12-24
-tag: ai security, ml security, ml models, pickle security, ai supply chain
+last_modified_at: 2025-12-25T09:13:13Z
+tags: ["ai security", "ml security", "ml models", "pickle security", "ai supply chain"]
 categories: general
+topic: AI Security
 permalink: universal-vulnerabilities-of-ml-models
 published: true
 lang: en
 ---
 
-# Beyond the Tensors: Exploring the Universal Vulnerabilities of ML Model Formats
 ## TLDR;
 2025 was a year spent understanding AI, using it correctly, and adapting to the wave of new security approaches entering our lives. The world is still catching up, and we are all learning—reading, testing, and failing forward.
 
@@ -36,7 +38,7 @@ It is the format used by the PyTorch library to store model weights and sometime
 - **model_folder/archive/byteorder:** This file indicates whether the data is stored in “little-endian” or “big-endian” format.
  > If the model is saved using **torch.jit.save()**, the structure changes to accommodate TorchScript. In this case, you will find a **code/** folder containing the serialized Python code of the model's architecture. This is used to run models in environments without a Python interpreter (like C++).
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/unzipping-pth-file-structure.png" class="imgCenter" alt="PTH File's Structure - Unzipped">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/unzipping-pth-file-structure.png" class="imgCenter" alt="PTH File's Structure - Unzipped">
 
 ### .joblib (Joblib File)
 It is a Pickle variant optimized for storing large data, particularly favored by Scikit-Learn. Standard Pickle is very slow and consumes a significant amount of RAM when storing large NumPy arrays. Joblib loads this data much faster using memory-mapping. It is usually a single binary file. It contains both object metadata (using the Pickle protocol) and optimized data blocks. Compression support (zlib, lz4, etc.) is available.
@@ -54,7 +56,7 @@ The PyTorch team is aware of this risk, so they finally made the weights_only=Tr
 - **Legacy Code:** Millions of lines of old code still use older PyTorch versions or set this parameter to False for compatibility.
 - **The “Fix” Reflex:** The developer encounters this error while trying to load a custom layer they wrote. As a solution, they apply the first recommendation they find online: **weights_only=False**.
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/pytorch-safe-belt.png" class="imgCenter" alt="PyTorch's Safe Belt">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/pytorch-safe-belt.png" class="imgCenter" alt="PyTorch's Safe Belt">
 
 > In this blog post, you will also see some evasion techniques shortly. These are examples provided to help you change your perspective a bit. While they can bypass some security products, this is a more comprehensive topic and not the subject of today's discussion. We must remember that this is a cat-and-mouse game. My goal in this blog post is not to show you how to bypass EDR tools, etc.
 
@@ -81,11 +83,11 @@ torch.save(LoudModel(), "loud_exploit.pth")
 
 When you load this file with weights_only=False on the victim side, you will see that the command works. However, this method is immediately detected by simple static analysis tools such as Hugging Face's **picklescan** tool. This is because the file explicitly references os.system.
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/loud-payload-strings.png" class="imgCenter" alt="PTH File's String Analysis">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/loud-payload-strings.png" class="imgCenter" alt="PTH File's String Analysis">
 
 When we push this unsafe PTH file to Hugging Face, you can see that it labels the file as unsafe.
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class="imgCenter" alt="Hugging Face Unsafe Labelling">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-unsafe-label.png" class="imgCenter" alt="Hugging Face Unsafe Labelling">
 
 ### Phase 2: Stealth Way
 In a real attack, our goal is to blind static analysis tools (Hugging Face PickleScan, etc.). The way to do this is to remove the threat from the Metadata (Pickle) section and hide it within the model's Mathematical Weights (Weights/Bias). I would like to reiterate that the purpose of this article is not to try to bypass security products.
@@ -137,7 +139,7 @@ torch.save(model, "logic_bomb.pth")
 print("[+] Logic Bomb saved as 'logic_bomb.pth'.")
 ```
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-picklescan-bypass.png" class="imgCenter" alt="Hugging Face picklescan Bypass Example">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/HuggingFace-picklescan-bypass.png" class="imgCenter" alt="Hugging Face picklescan Bypass Example">
 
 > For torch.load to work, the victim’s environment must have the LogicBombModel class defined; otherwise, it will trigger an AttributeError. In a real-world scenario, attackers bypass this by bundling the model with a "necessary" helper script (Social Engineering) or by injecting the malicious class into legitimate libraries via supply chain attacks.
 
@@ -228,7 +230,7 @@ To fill that massive gap on the Scikit-Learn (Joblib) side, Hugging Face develop
 In a corporate MLOps pipeline, models should not only be scanned; the concept of Signed Models should also be implemented. Only allowing models signed with the organization's own key to enter the Production environment is the most definitive way to prevent potential Supply Chain Attacks from outside sources.
 
 ### Fickling
-Static scanners (such as <a href="https://huggingface.co/docs/hub/security-pickle" target="_blank">Hugging Face PickleScan.</a>) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
+Static scanners (such as <a href="https://huggingface.co/docs/hub/security-pickle" target="_blank" rel="noopener noreferrer">Hugging Face PickleScan.</a>) only look for specific signatures. **Fickling**, developed by Trail of Bits, is a more comprehensive and advanced tool for pickle security. It is not just a scanner, but also a decompiler, static analysis tool, and bytecode editor. Its biggest difference is that it can perform a secure analysis without actually executing any part of the code by symbolically executing the pickle virtual machine (Pickle Machine). It can be used both via the CLI and directly within the code as a Python library.
 
 One of Fickling's most powerful features is that it provides a whitelist-based security hook for pickle loads. This feature allows safe imports from ML libraries while blocking all other calls.
 
@@ -262,9 +264,9 @@ fickling --check-safety -p data.pkl
 fickling --trace data.pkl
 ```
 
-<img src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/fickling-cli-example.png" class="imgCenter" alt="Hugging Face picklescan Bypass Example">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/universal-vulnerabilities-of-ml-models/fickling-cli-example.png" class="imgCenter" alt="Hugging Face picklescan Bypass Example">
 
-For more detailed information about Fickling, you can check out the <a href="https://github.com/trailofbits/fickling" target="_blank">GitHub repository.</a>
+For more detailed information about Fickling, you can check out the <a href="https://github.com/trailofbits/fickling" target="_blank" rel="noopener noreferrer">GitHub repository.</a>
 
 
 
