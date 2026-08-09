@@ -6,6 +6,7 @@ baseurl: ""
 lang: en
 locale: en_US
 timezone: Europe/Istanbul
+asset_version: "20260810-1"
 
 author:
   name: Mehmet Ayberk

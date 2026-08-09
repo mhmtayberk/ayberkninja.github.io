@@ -14,8 +14,8 @@
   {% endif %}
   <link rel="describedby" href="{{ '/llms.txt' | absolute_url }}" type="text/plain" />
 
-  <link rel="stylesheet" href="{{ '/assets/css/mark.css' | relative_url }}" />
-  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/mark.css' | relative_url }}?v={{ site.asset_version }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}?v={{ site.asset_version }}" />
 
   <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/favicon/apple-touch-icon.png' | relative_url }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/favicon/favicon-32x32.png' | relative_url }}">
