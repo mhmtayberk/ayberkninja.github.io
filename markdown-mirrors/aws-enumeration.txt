@@ -1,17 +1,17 @@
 ---
-layout: post
-title: Bulutlara Dokunmak ☁️ - AWS/Enumeration
-description: "AWS ortamlarında güvenlik odaklı enumeration, keşif yöntemleri, S3 bucket araştırması ve IAM bilgi toplama teknikleri."
-date: 2021-08-28
-last_modified_at: 2022-03-13T22:02:18+03:00
-tags: ["aws", "aws enum", "aws recon", "aws enumeration", "cloud security", "cloud recon"]
-categories: general
-topic: AWS Security
-permalink: aws-enumeration
-published: true
-lang: tr
-locale: tr_TR
+layout: null
+permalink: /aws-enumeration.md
+sitemap: false
 ---
+{% raw %}# Bulutlara Dokunmak ☁️ - AWS/Enumeration
+
+> AWS ortamlarında güvenlik odaklı enumeration, keşif yöntemleri, S3 bucket araştırması ve IAM bilgi toplama teknikleri.
+
+- Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
+- Published: 2021-08-28
+- Updated: 2022-03-13T22:02:18+03:00
+- Language: Türkçe
+- Canonical: [https://ayberk.ninja/aws-enumeration](https://ayberk.ninja/aws-enumeration)
 
 Herkese selamlar. Yaklaşık bir asır sonunda yeniden motivasyonumu toparladım ve bir blog serisine başlamak istedim. Bu blog serisinde sizlere AWS tarafındaki enumeration, exploitation ve post-exploitation aşamalarından bahsedeceğim. Bu blog serisi boyunca AWS ve bulut bilişim ile ilgili detaylı bilgiler olmayacak. Doğrudan bulut bilişimin güvenliği ile ilgileniyor olacağız. Elbette temel ihtiyaçlarımızı tanıtıyor da olacağız. Bu yazıda yalnızca AWS tarafından ve enumeration işlemlerinden bahsediyor olacağım. Örnek uygulamalar noktasında zafiyetli bir bulut hizmeti olan <a href="http://flaws.cloud/" target="_blank" rel="noopener noreferrer">Flaws Cloud'u</a> kullanacağım. Lafı fazla uzatmadan konumuza bir girizgah yapalım.
 
@@ -172,3 +172,4 @@ Bulut güvenliği ile ilgili daha geniş bir araç setine <a href="https://githu
 
 ## Geri Bildirim
 AWS üzerinde Enumeration işlemlerini anlattığım blog yazısı bu kadardı. Exploitation ve Post-Exploitation aşamalarında görüşmek üzere. Herhangi bir geri bildiriminiz olması durumunda benimle herhangi bir iletişim kanalı (Twitter, Threema vb.) üzerinden iletişime geçebilirsiniz.
+{% endraw %}

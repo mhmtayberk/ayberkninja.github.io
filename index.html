@@ -1,8 +1,19 @@
 ---
 title: Web Security Blog
 layout: collections_layout
+description: "Application security, AWS security, cloud security and AI security research in English and Turkish by Mehmet Ayberk."
 ---
 
 {% for post in site.posts %}
-<a id="{{post.lang}}" href="{{site.baseurl}}{{post.url}}">{{post.title}}</a>
-{%endfor%}
+<article class="post-list-item" data-lang="{{ post.lang }}">
+  <a href="{{ post.url | relative_url }}">
+    <span class="post-list-meta">
+      <span>[{{ post.lang | upcase }}]</span>
+      <span>{{ post.topic | default: post.categories.first | default: 'Security' }}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    </span>
+    <span class="post-list-title">{{ post.title }}</span>
+  </a>
+</article>
+{% endfor %}

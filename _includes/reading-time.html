@@ -1,6 +1,7 @@
-{% capture words %}
-{{ content | number_of_words | minus: 180 }}
-{% endcapture %}
-{% unless words contains '-' %}
-{{ words | plus: 150 | divided_by: 150 | append: ' minutes to read' }}
-{% endunless %}
+{% assign words = content | number_of_words %}
+{% assign minutes = words | plus: 149 | divided_by: 150 %}
+{% if page.lang == 'tr' %}
+{{ minutes }} dakikalık okuma
+{% else %}
+{{ minutes }} minute{% unless minutes == 1 %}s{% endunless %} to read
+{% endif %}

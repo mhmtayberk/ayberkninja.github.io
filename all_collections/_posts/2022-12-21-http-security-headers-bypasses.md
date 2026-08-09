@@ -1,12 +1,16 @@
 ---
 layout: post
 title: HTTP Güvenlik Başlıklarını Atlatmak
+description: "HttpOnly, X-Frame-Options ve Content-Security-Policy gibi HTTP güvenlik kontrollerinin senaryo bağımlı bypass yöntemleri."
 date: 2022-12-21
-tag: http güvenlik başlıkları, bypass, web security, http security headers
+last_modified_at: 2022-12-22T03:17:35+03:00
+tags: ["http güvenlik başlıkları", "bypass", "web security", "http security headers"]
 categories: web-security
+topic: Web Security
 permalink: http-guvenlik-basliklarini-atlatmak
 published: true
 lang: tr
+locale: tr_TR
 ---
 
 Herkese selamlar. 2022 yılının son blogpost'unu yıl sona ermeden yazmak ve yayınlamak istedim. Blogumda şuana dek AWS güvenliği üzerine odaklı yazılar yayınlamış olsamda aslında ele almak istediğim kapsam daha geniş. Bu noktada bugün daha farklı bir konuya değinmek istedim. Hepimizin aşina olduğu HTTP güvenlik başlıklarının çeşitli senaryolarda nasıl atlatılabildiği (bypass) üzerine bir blogpost olacak. Bu noktada bu güvenlik başlıklarının ne olduklarına ve nasıl çalıştıklarına detaylıca değinmeyeceğim. Eğer bu konuda eksik olduğunuzu düşünüyorsanız bu blogpost'u okumadan önce HTTP güvenlik başlıklarını kısaca araştırmanızı şiddetle tavsiye ediyorum. Son olarak bu blogpost'un amacının HTTP güvenlik başlıklarına Deep Dive bakış yapmak olmadığını ve daha önce yayınlanmamış yöntemleri içermediğini belirtmeliyim. Web güvenliğine meraklı kişilerin elinin altında derli toplu bir kaynak olması amaçlanmaktadır.
@@ -20,7 +24,7 @@ Herkese selamlar. 2022 yılının son blogpost'unu yıl sona ermeden yazmak ve y
 ### HttpOnly Bypass via PHPInfo File
 Bu bypass yöntemindeki mantık özünde oldukça basittir. Bildiğiniz üzere HttpOnly flag'ı ile işaretlenmiş bir Cookie değeri varsa bu değeri XHR vb. metotlar ile elde etmek mümkün değildir. Fakat zafiyetli sitede PHPInfo dosyası unutulmuş ise ve bu dosyaya erişimimizde herhangi bir kısıtlama yoksa HttpOnly flag'ını bypasslamak mümkün oluyor. Şöyle ki PHPInfo dosyası bilindiği gibi PHP'nin durumu ile ilgili çok geniş bilgileri (konfigürasyon ayarları, sürüm bilgileri, environment bilgileri, ortam değişkenleri vs.) tarafımıza sunan bir fonksiyondur. Burada duruma bağlı olarak Header bilgileri de plaintext bir şekilde ekrana basılmaktadır.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/phpinfo-file-details.png" class="imgCenter" alt="PHPInfo Details" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/phpinfo-file-details.png" class="imgCenter" alt="PHPInfo Details" />
 
 Bu noktadan itibaren XHR kullanarak PHPInfo dosyasını okumanız durumunda HttpOnly işaretlenmiş Cookie'leri de rahatlıkla çalabilmiş olacaksınız. Örnek XHR kodu ise şu şekilde olacaktır;
 ```js
@@ -46,20 +50,20 @@ Cookie Jar Overflow ile HttpOnly flag'ının nasıl bypasslandığını anlamak 
 
 Buradan yola çıkarak eğer çok sayıda Cookie tanımlayabilirsek eski HttpOnly işaretlenmiş Cookie'ler silinecektir. Böylece aynı isimde HttpOnly olmayan bir Cookie tanımlanabilecektir. Her şey güzel fakat burada web uygulamasını etkileyen durum nedir dediğinizi duyar gibiyim. Web uygulamasının bu zafiyetten etkilenmesi için sessionid değeri değişmesine rağmen hesapta aktif oturumun devam ettiği bir senaryo olmalıdır.  (Bknz: Session Fixation)
 
-Demo ortamı ve detaylı bilgi için zafiyeti bulan araştırmacı olan <a href="https://www.sjoerdlangkemper.nl/2020/05/27/overwriting-httponly-cookies-from-javascript-using-cookie-jar-overflow/" target="_blank">Sjoerd Langkemper'ın blogpost'una</a> göz atabilirsiniz.
+Demo ortamı ve detaylı bilgi için zafiyeti bulan araştırmacı olan <a href="https://www.sjoerdlangkemper.nl/2020/05/27/overwriting-httponly-cookies-from-javascript-using-cookie-jar-overflow/" target="_blank" rel="noopener noreferrer">Sjoerd Langkemper'ın blogpost'una</a> göz atabilirsiniz.
 
 ### Cross Site Tracing (XST)
 Konuya bir girişgah yapmadan şunu belirtmeliyim ki modern tarayıcılar TRACE methodu kullanılarak yapılan JavaScript Request'lerine izin vermemekte. Bu noktada bu zafiyetin güncelliğini bir noktada yitirdiğini söyleyebiliriz. Fakat literatürde var olan bir zafiyete de kısaca değinmeden geçmek istemedim.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/trace-method-not-allowed-firefox.png" class="imgCenter" alt="Trace Method Not Allowed - Firefox" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/trace-method-not-allowed-firefox.png" class="imgCenter" alt="Trace Method Not Allowed - Firefox" />
 
 Bu atak vektörü TRACE ve TRACK HTTP metodları kullanılarak yapılmaktadır. Bu noktada TRACE ve TRACK metodlarının ne iş yaptığını bilmemizde fayda olacaktır. TRACE ve TRACK methodları, istemcinin istek zincirinin diğer ucunda nelerin alındığını görmesine ve bu verileri test veya teşhis bilgileri için (diagnostic) kullanmasına olanak tanır. Bir örnek üzerinden XST atağını anlatalım:
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/trace-method-1.png" class="imgCenter" alt="cURL Trace Method Usage" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/trace-method-1.png" class="imgCenter" alt="cURL Trace Method Usage" />
 
 Yukarıdaki görselde TRACE methodu kullanıldığında dönen Response'u görmektesiniz. Buradan yola çıkarak Cookie parametresini TRACE methodu ile birlikte kullanırsak olacaklar şöyledir:
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/trace-method-2.png" class="imgCenter" alt="cURL Trace Method Usage" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/trace-method-2.png" class="imgCenter" alt="cURL Trace Method Usage" />
 
 Gördüğünüz üzere dönen Response'ta bize Cookie bilgisi de iletilmektedir. Eğer bu noktada Cookie Header'ını da post edecek şekilde bir XHR kodu kullanırsak HttpOnly işaretli Cookie'leri de çalabileceğizdir. Kullanmamız gereken kod aşağıdaki gibi olmalıdır:
 ```js
@@ -73,7 +77,7 @@ Gördüğünüz üzere dönen Response'ta bize Cookie bilgisi de iletilmektedir.
 </script>
 ```
 
-Konuyla ilgili detaylı bilgiye konunun keşifçisi Jeremiah Grossman'ın yazmış olduğu <a href="https://www.cgisecurity.com/whitehat-mirror/WH-WhitePaper_XST_ebook.pdf" target="_blank">WhitePaper'dan</a> ulaşabilirsiniz.
+Konuyla ilgili detaylı bilgiye konunun keşifçisi Jeremiah Grossman'ın yazmış olduğu <a href="https://www.cgisecurity.com/whitehat-mirror/WH-WhitePaper_XST_ebook.pdf" target="_blank" rel="noopener noreferrer">WhitePaper'dan</a> ulaşabilirsiniz.
 
 ## Content-Security-Policy (CSP) Header Bypass
 Content-Security-Policy HTTP başlığının yanlış konfigüre edilmesinden kaynaklı atlatma yöntemleri ortaya çıkmaktadır. Burada CSP başlığını konfigüre etmenin belli bir standartı bulunmamaktadır. Bu durum tamamen yazılım geliştiricinin / sistem yöneticisinin elindedir ve çeşitli caselere göre değişiklik gösterecektir. Bu noktada belirtmeliyim ki CSP'yi bypasslamanın oldukça fazla yolu vardır. Bu blogpostta en popüler yöntemlerden bahsedeceğim. Bunlar şu şekildedir:
@@ -118,13 +122,13 @@ Bu direktifte doğrudan aşağıdaki gibi bir payload çalışacaktır.
 "/><script>alert(1);</script>
 ```
 
-Demo ortamında örneğimizi incelemek için <a href="https://brutelogic.com.br/csp/csp-unsafe-inline.php?p=%3Csvg%20onload=alert(1337)%3E" target="_blank">Brute Logic'in CSP Lab'ını</a> kullandım. Sayfanın kaynak kodunu aşağıdaki görselde görmektesiniz.
+Demo ortamında örneğimizi incelemek için <a href="https://brutelogic.com.br/csp/csp-unsafe-inline.php?p=%3Csvg%20onload=alert(1337)%3E" target="_blank" rel="noopener noreferrer">Brute Logic'in CSP Lab'ını</a> kullandım. Sayfanın kaynak kodunu aşağıdaki görselde görmektesiniz.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/unsafe-inline-source-code.png" class="imgCenter" alt="unsafe-inline Lab - Source Code" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/unsafe-inline-source-code.png" class="imgCenter" alt="unsafe-inline Lab - Source Code" />
 
 En basic payload'umuzu kullanalım ve neler olduğunu görelim.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/unsafe-inline-exploit.png" class="imgCenter" alt="unsafe-inline Lab - Exploit" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/unsafe-inline-exploit.png" class="imgCenter" alt="unsafe-inline Lab - Exploit" />
 
 ### File Upload ve self Direktifinin Kullanılması Durumu
 Eğer hedef sistemde dosya yükleyebildiğiniz bir alan varsa ve yüklenen dosyanın konumunu tespit edebiliyorsanız CSP'yi atlatabiliyor olabilirsiniz. Fakat bu tek başına yeterli değildir. Bir diğer hususta CSP implementasyonunda self direktifinin kullanılmış olmalıdır. Örnek bir CSP tanımı şu şekilde olmalıdır:
@@ -147,7 +151,7 @@ Content-Security-Policy: script-src data: ;
 
 Bu noktada örnek payload şu şekilde olmalıdır: **<script src=data:alert(1)></script>** . Lab olarak yine Brute Logic'in lab'ını kullanıyorum.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/data-whitelist-exploit.png" class="imgCenter" alt="Data Scheme Whitelist Lab - Exploit" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/data-whitelist-exploit.png" class="imgCenter" alt="Data Scheme Whitelist Lab - Exploit" />
 
 ### base-uri Direktifinin Bulunmaması Durumu
 base-uri direktifini anlamak için öncelikle base HTML elementini bilmemiz gerekmektedir. Bir sayfadaki tüm göreli URL'ler için Base URL tanımlamamıza olanak sağlar. Küçük bir örnek ile açıklamamız gerekirse:
@@ -177,17 +181,17 @@ Tahmin edebileceğiniz üzere her HTTP güvenlik başlığının bilinen atlatma
 * Proxy
 
 ### Nested Frame'lerin Atlatılması
-Nefted yani iç içe frame kullanımı yanlış konfigüre edildiyse atlatılabilmektedir. Nested frameler SameOrigin direktifi ile birlikte kullanıldığı durumlarda atlatılabiliyor. Eğer frame'leri engellemek için CSP'nin frame-ancestors direktifi yerine X-Frame-Options'ın SAMEORIGIN direktifini kullandıysanız problem burada başlıyor. SAMEORIGIN direktifi, frame-ancestors'un aksine frame'leri yalnızca top-level konuma göre kontrol eder. X-Frame-Options'ın RFC'si olan <a href="https://www.rfc-editor.org/rfc/rfc7034" target="_blank">RFC-7034'e</a> göre:
+Nefted yani iç içe frame kullanımı yanlış konfigüre edildiyse atlatılabilmektedir. Nested frameler SameOrigin direktifi ile birlikte kullanıldığı durumlarda atlatılabiliyor. Eğer frame'leri engellemek için CSP'nin frame-ancestors direktifi yerine X-Frame-Options'ın SAMEORIGIN direktifini kullandıysanız problem burada başlıyor. SAMEORIGIN direktifi, frame-ancestors'un aksine frame'leri yalnızca top-level konuma göre kontrol eder. X-Frame-Options'ın RFC'si olan <a href="https://www.rfc-editor.org/rfc/rfc7034" target="_blank" rel="noopener noreferrer">RFC-7034'e</a> göre:
 > In some, it only allows a page to be framed if the origin of the top-level browsing context is identical to the origin of the content using the X-Frame-Options directive; in others, it may consider the origin of the framing page instead.
 
-Chrome Status'ün sayfasına göz gezdirirken arkadaşım <a href="https://twitter.com/hebunilhanli" target="_blank">Hebun İlhanlı'nın</a> gözüne şu tartışma konusu çarptı: <a href="https://chromestatus.com/feature/4678102647046144" target="_blank">Feature: X-Frame-Options: SAMEORIGIN matches all ancestors.</a> Bu noktada şunu söyleyebiliriz ki ilgili bulgu güncelliğini yitirmiş görünüyor.
+Chrome Status'ün sayfasına göz gezdirirken arkadaşım <a href="https://twitter.com/hebunilhanli" target="_blank" rel="noopener noreferrer">Hebun İlhanlı'nın</a> gözüne şu tartışma konusu çarptı: <a href="https://chromestatus.com/feature/4678102647046144" target="_blank" rel="noopener noreferrer">Feature: X-Frame-Options: SAMEORIGIN matches all ancestors.</a> Bu noktada şunu söyleyebiliriz ki ilgili bulgu güncelliğini yitirmiş görünüyor.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/x-frame-options-chromium-update.png" class="imgCenter" alt="X-Frame-Options Chromium Update" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/x-frame-options-chromium-update.png" class="imgCenter" alt="X-Frame-Options Chromium Update" />
 
 ### Proxy
 Hepimiz Reverse Proxy kavramını en azından bir kere duymuşuzdur. En azından CloudFlare ile hayatımızın bir yerlerinde karşılaşmışızdır. İşte buradaki bypass yöntemimiz de tam olarak Proxy'ler ile ilgili. Aşağıdaki görsel üzerinden durumu özetleyelim.
 
-<img src="/assets/blog-photos/http-security-headers-bypasses/proxy-xfo-bypass.jpg" class="imgCenter" alt="Proxy XFO Bypass Scheme" />
+<img loading="lazy" decoding="async" src="/assets/blog-photos/http-security-headers-bypasses/proxy-xfo-bypass.jpg" class="imgCenter" alt="Proxy XFO Bypass Scheme" />
 
 Aslında görmüş olduğunuz yapı normal bir Proxy'nin çalışma yapısı. Client isteğini sunucuya iletmek için ve sunucudan dönen cevabı almak için Proxy'yi kullanmakta. Burada Proxy, saldırganımızın kontrolünde. Bu noktada **3** numaralı adımda Proxy tarafından X-Frame-Options başlığı kaldırılır. Örneğin saldırganın nginx kullandığını var sayarsak aşağıdaki konfigürasyon ile bu işlemi gerçekleştirebilecektir:
 ```nginx

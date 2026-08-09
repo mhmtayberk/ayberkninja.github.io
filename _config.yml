@@ -1,18 +1,35 @@
 title: ayberk.ninja
+description: "Application security, AWS security, cloud security and AI security research in English and Turkish."
 markdown: kramdown
-url: "ayberk.ninja"
+url: "https://ayberk.ninja"
 baseurl: ""
+lang: en
+locale: en_US
+timezone: Europe/Istanbul
+
+author:
+  name: Mehmet Ayberk
+  url: "https://ayberk.ninja/about.html"
+  twitter: mhmtayberk
+
+logo: /assets/ninja.png
+
+twitter:
+  username: mhmtayberk
+  card: summary
+
+social:
+  name: Mehmet Ayberk
+  links:
+    - https://github.com/mhmtayberk
+    - https://twitter.com/mhmtayberk
+    - https://www.linkedin.com/in/mhmtayberk/
 
 plugins:
-  - jekyll-paginate
   - jemoji
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed
-
-paginate_path: "/page:num/"
-
-paginate: 5
 
 collections_dir: all_collections
 collections:
@@ -31,9 +48,21 @@ defaults:
     values:
       layout: "post"
       permalink: /posts/:categories/:year/:month/:day/:title/
+  - scope:
+      path: "markdown-mirrors"
+    values:
+      sitemap: false
       
 webrick:
   headers:
     X-XSS-Protection: 1
 
-exclude: ["sitemap.xml", "feed.xml", "LICENSE"]
+include: [".well-known"]
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - font-awesome
+  - screenshots
+  - scripts

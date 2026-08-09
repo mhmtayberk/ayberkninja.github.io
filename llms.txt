@@ -1,0 +1,19 @@
+---
+layout: null
+permalink: /llms.txt
+sitemap: false
+---
+# ayberk.ninja
+
+> Mehmet Ayberk's personal cybersecurity blog, with technical articles in English and Turkish about application security, AWS and cloud security, and AI/ML security.
+
+## About
+
+- [About Mehmet Ayberk]({{ '/about.html.md' | absolute_url }}): Professional background, community work, and seminars.
+- [Security advisories]({{ '/zeroDay/index.html.md' | absolute_url }}): Published vulnerability and CVE references.
+- [Presentations]({{ '/presentation/index.html.md' | absolute_url }}): Application security presentation material.
+
+## Articles
+
+{% for post in site.posts %}- [{{ post.title }}]({{ post.url | append: '.md' | absolute_url }}): {{ post.description }}
+{% endfor %}

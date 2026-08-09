@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ page.lang | default: site.lang }}">
   {% include head.html %}
   <body>
     <div id="indicator"></div>
@@ -26,8 +26,13 @@
       {% include nav.html %}
       <!-- page content -->
       <main class="post-list">
-        <p class="title">~/posts</p>
-        <p style="font-size: "13px">Post Lang. : <span id="showEN">[EN]</span> | <span id="showTR">[TR]</span> </p>
+        <h1 class="title">~/posts</h1>
+        <div class="language-filter" aria-label="Filter posts by language">
+          Post language:
+          <button type="button" data-language-filter="en" aria-pressed="false">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-language-filter="tr" aria-pressed="false">TR</button>
+        </div>
         {{content}}
       </main>
 

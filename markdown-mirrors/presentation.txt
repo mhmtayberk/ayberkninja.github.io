@@ -1,0 +1,15 @@
+---
+layout: null
+permalink: /presentation/index.html.md
+sitemap: false
+---
+{% raw %}# Presentations
+
+> Application security and secure development presentations by Mehmet Ayberk.
+
+- Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
+- Language: English
+- Canonical: [https://ayberk.ninja/presentation/](https://ayberk.ninja/presentation/)
+
+<object data="/presentation/how-to-build-secure-login-mehmet-ayberk-annadinc.pdf" width="1000" height="1000" type='application/pdf'/>
+{% endraw %}

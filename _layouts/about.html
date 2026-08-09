@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ page.lang | default: site.lang }}">
   {% include head.html %}
   <body>
     <div id="indicator"></div>
@@ -21,6 +21,7 @@
       {% include nav.html %}
       <!-- page content -->
       <main class="content">
+        <h1 class="title">{{page.title}}</h1>
         {{content}}
       </main>
 
