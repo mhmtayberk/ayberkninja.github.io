@@ -1,10 +1,10 @@
 list:
   - title: Home
-    url: ""
+    url: /
   - title: About
-    url: about
+    url: /about.html
   - title: 0Day
-    url: zeroDay
+    url: /zeroDay/
   - title: Feed
-    url: feed.xml
+    url: /feed.xml
     target: "_blank"

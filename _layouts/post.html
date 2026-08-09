@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-  <meta name="author" content="Mehmet Ayberk">
+<html lang="{{ page.lang | default: site.lang }}">
   {% include head.html %}
   <body>
     <div id="indicator"></div>
+    <div id="reading-progress" aria-hidden="true"></div>
     <div id="page">
       <style>
         .title {
@@ -31,12 +31,30 @@
       <!-- nav -->
       {% include nav.html %}
       <!-- page content -->
-      <main class="content">
-        <p class="title">
-          {{page.title}}
-        </p>
-        {% include reading-time.html %}
-        {{content}}
+      <main class="content post-layout">
+        <article class="post-article">
+          <h1 class="title">
+            {{ page.title }}
+          </h1>
+          <p class="meta">
+            <span>{{ page.author | default: site.author.name }}</span>
+            <span aria-hidden="true">·</span>
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+            <span aria-hidden="true">·</span>
+            {% include reading-time.html %}
+          </p>
+          <aside class="table-of-contents" aria-label="Table of contents">
+            <details open>
+              <summary>On this page</summary>
+              <nav aria-label="Article sections">
+                <ol></ol>
+              </nav>
+            </details>
+          </aside>
+          <div class="post-body">
+            {{ content }}
+          </div>
+        </article>
       </main>
 
       <!-- footer -->

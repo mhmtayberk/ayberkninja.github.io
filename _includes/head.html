@@ -1,82 +1,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="description" content="The purpose of this blog is to publish articles in Turkish and English on application security.">
-  <meta name="keywords" content="cyber security, web security, application security, mehmet ayberk, ethical hacking">
-  
-  <title>{{site.title}} | {{page.title}}</title>
-  
-  <link rel="stylesheet" href="{{site.baseurl}}/assets/css/mark.css" />
-  <link rel="stylesheet" href="{{site.baseurl}}/assets/css/custom.css" />
-  
-  <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon//favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon//favicon-16x16.png">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="{%if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="twitter:site" content="@mhmtayberk" />
-  <meta name="twitter:creator" content="@mhmtayberk">
-  <meta name="twitter:card" content="summary">
-  <!-- PILL JS LOADER SYLE -->
-  <style>
-    #indicator {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      height: 3px;
-      display: none;
-      background-color: #08CACA;
-    }
+  {% seo %}
+  {% feed_meta %}
+  <meta name="robots" content="{% if page.robots %}{{ page.robots }}{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}" />
+  <meta name="theme-color" content="#101417" />
+  {% assign markdown_mirror = page.markdown_mirror %}
+  {% if page.collection == 'posts' %}
+    {% assign markdown_mirror = page.url | append: '.md' %}
+  {% endif %}
+  {% if markdown_mirror %}
+  <link rel="alternate" type="text/markdown" href="{{ markdown_mirror | absolute_url }}" title="Markdown version" />
+  {% endif %}
+  <link rel="describedby" href="{{ '/llms.txt' | absolute_url }}" type="text/plain" />
 
-    .is-loading {
-      display: block;
-      animation: blink 1.5s linear infinite;
-    }
+  <link rel="stylesheet" href="{{ '/assets/css/mark.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}" />
 
-    @keyframes blink {
-      from,
-      to {
-        background-color: #72b6b5;
-      }
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/favicon/apple-touch-icon.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/favicon/favicon-32x32.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/favicon/favicon-16x16.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/assets/favicon/site.webmanifest' | relative_url }}">
 
-      50% {
-        background-color: #42b983;
-      }
-    }
-
-    #project-link {
-      display: block;
-      position: fixed;
-      padding: 8px;
-      top: 0;
-      right: 0;
-    }
-  </style>
-  <!-- PILL JS -->
-  <script src="{{site.baseurl}}/assets/js/pill.min.js"></script>
-  <script>
-    // this is for pill js as the normal link wont work
-    function openLink(url) {
-      window.open(url, "_blank");
-    }
-  </script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script>
-        $(document).ready(function(){
-          $("#showEN").click(function(){
-            $("[id=en]").show();
-            $("[id=tr]").hide();
-          });
-          $("#showTR").click(function(){
-            $("[id=tr]").show();
-            $("[id=en]").hide();
-          });
-        });
-        </script>
+  <script src="{{ '/assets/js/pill.min.js' | relative_url }}"></script>
 </head>

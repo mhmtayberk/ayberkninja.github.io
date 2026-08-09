@@ -1,15 +1,17 @@
 ---
 layout: post
 title: Managing Security Alarms with Automation in AWS
+description: "Build automated AWS security responses with Config, CloudTrail, EventBridge, Lambda and Security Hub."
 date: 2025-01-25
-tag: aws, aws security, security automation, aws security alarms, aws security automation
+last_modified_at: 2025-01-27T14:02:35+03:00
+tags: ["aws", "aws security", "security automation", "aws security alarms", "aws security automation"]
 categories: general
+topic: AWS Security
 permalink: managing-security-alarms-with-automation-in-aws
 published: true
 lang: en
 ---
 
-# Managing Security Alarms with Automation in AWS
 ## TLDR;
 Automated detection of security threats and taking necessary actions are among the most important aspects. As the attack surface expands daily, the number of topics requiring regular monitoring also increases. At this point, it is critical to build, design, and maintain automated systems as well as manual controls and human power. AWS has various security services that allow us to perform some security checks on a regular basis. Using these services more efficiently depends on the architecture we will design depending on the structure of our organization. In this blog post, I will take some security alarms that we think may be harmful in AWS by using AWS's security services and take automatic actions thanks to Lambda.
 
@@ -33,18 +35,18 @@ When attackers gain unauthorized access through the interface or CLI, there are 
 My goal here is to give you an overview of how you can build mini security automations in AWS, rather than having you do these examples in person.
 
 At the end of the day, our architecture will look like this:
-<img src="/assets/blog-photos/security-alarms-with-automation/architecture.png" class="imgCenter" alt="AWS CloudTrail Deactivation Automation Architecture">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/security-alarms-with-automation/architecture.png" class="imgCenter" alt="AWS CloudTrail Deactivation Automation Architecture">
 
 #### Enable cloudtrail-enabled Rule in AWS Config
 First of all, we need to activate the **AWS Config** service. I skip the part on how to activate AWS Config and continue my article in the scenario where it is already active. We need to check whether CloudTrail is active on AWS Config. For that from the left menu we have to go to **Rules** and **Add Rule**. By selecting **AWS Managed Rule**, we select **cloudtrail-enabled** or **multi-region-cloudtrail-enabled** and create our rule.
 > We could have created the automation for this scenario by listening to CloudTrail calls directly on EventBridge without using AWS Config. I added this step so that you can see different scenarios.
 
-<img src="/assets/blog-photos/security-alarms-with-automation/aws-config-cloudtrail-enabled.png" class="imgCenter" alt="AWS Config cloudtrail-enabled Rule">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/security-alarms-with-automation/aws-config-cloudtrail-enabled.png" class="imgCenter" alt="AWS Config cloudtrail-enabled Rule">
 
 #### Automatic Response with Lambda Function
 We need the Lambda function to take the automatic action if CloudTrail is deactivated. The code we will write here will be quite simple. Of course, you may need to improve your code depending on the needs of the organization. For this, we will of course create an IAM role, create our Lambda function, and add the IAM code to this Lambda function. (Spoiler: Yes! We will then use EventBridge to trigger the Lambda function).
 
-Before we start creating the Lambda function, we will need to create an IAM role to give the Lambda function the authorizations it needs to make the necessary changes to CloudTrail. You can also use <a href="https://awspolicygen.s3.amazonaws.com/policygen.html" target="_blank">AWS's IAM Role Generator</a> to create an IAM role.
+Before we start creating the Lambda function, we will need to create an IAM role to give the Lambda function the authorizations it needs to make the necessary changes to CloudTrail. You can also use <a href="https://awspolicygen.s3.amazonaws.com/policygen.html" target="_blank" rel="noopener noreferrer">AWS's IAM Role Generator</a> to create an IAM role.
 
 For this, you must follow these steps on the IAM screen:
 - Go to IAM > Policies > Create Policy
@@ -176,7 +178,7 @@ For this scenario, we want to trigger the Lambda function we wrote to recognize 
 - Create the rule.
 
 The EventBridge Rule summary we created should look like this:
-<img src="/assets/blog-photos/security-alarms-with-automation/eventbridge-review.png" class="imgCenter" alt="EventBridge Rule Review">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/security-alarms-with-automation/eventbridge-review.png" class="imgCenter" alt="EventBridge Rule Review">
 
 That's all. Now we have a mini automation that will reactivate any of the CloudTrail Trails in case any of them is deactivated. Of course, you can also develop different solutions specific to your organization. For example:
 - If you have Trails that should not be included in this automation, you can create an Exception list and develop your code accordingly.
@@ -190,7 +192,7 @@ Just deactivate an existing Trail. After a short time, you will see that the Tra
 
 Also after a while you have to see Noncompliant Warning on the AWS Config.
 
-<img src="/assets/blog-photos/security-alarms-with-automation/aws-config-cloudtrail-non-compliant.png" class="imgCenter" alt="AWS CloudTrail Noncompliant Warning">
+<img loading="lazy" decoding="async" src="/assets/blog-photos/security-alarms-with-automation/aws-config-cloudtrail-non-compliant.png" class="imgCenter" alt="AWS CloudTrail Noncompliant Warning">
 
 > In fact, we could have triggered our Lambda function by selecting the Create custom Lambda rule option while creating our Config Rule without using EventBridge. I would like to state again that my goal here is to provide you with different perspectives. There are many different ways to create such mini security automations on AWS. Of course, you can create the most suitable architecture according to your needs and by getting to know AWS services.
 
