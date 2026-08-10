@@ -120,7 +120,6 @@ function initializeTableOfContents() {
     list.append(item);
     });
 
-  applyTableOfContentsMode();
 }
 
 function slugifyHeading(value) {
@@ -130,12 +129,6 @@ function slugifyHeading(value) {
     .toLowerCase()
     .replace(/[^a-z0-9\u00c0-\u024f]+/g, "-")
     .replace(/^-+|-+$/g, "");
-}
-
-function applyTableOfContentsMode() {
-  const details = document.querySelector(".table-of-contents details");
-  if (!details) return;
-  details.open = !window.matchMedia("(max-width: 1050px)").matches;
 }
 
 function initializeCodeBlocks() {
@@ -310,7 +303,6 @@ document.addEventListener("keydown", event => {
 
 window.addEventListener("scroll", updateReadingProgress, { passive: true });
 window.addEventListener("resize", () => {
-  applyTableOfContentsMode();
   updateReadingProgress();
 });
 
