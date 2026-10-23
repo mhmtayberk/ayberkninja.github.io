@@ -3,7 +3,7 @@ layout: post
 title: Managing Security Alarms with Automation in AWS
 description: "Detect AWS security events and automate response with Config, CloudTrail, EventBridge, Lambda and Security Hub."
 image: /assets/social/aws-security-automation.jpg
-image_alt: "Isometric cloud security automation loop from detection through remediation"
+image_alt: "Isometric automation loop detecting disabled CloudTrail logging and restoring it through Config, EventBridge and Lambda"
 date: 2025-01-25
 last_modified_at: 2025-01-27T14:02:35+03:00
 tags: ["aws", "aws security", "security automation", "aws security alarms", "aws security automation"]
