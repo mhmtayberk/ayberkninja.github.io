@@ -5,7 +5,7 @@ sitemap: false
 ---
 {% raw %}# Beyond the Tensors: Exploring the Universal Vulnerabilities of ML Model Formats
 
-> Explore insecure deserialization in ML model formats, PyTorch and Joblib attack paths, scanner bypasses and safer alternatives.
+> Insecure deserialization across PyTorch, Pickle and Joblib model files, with scanner bypasses, hidden payloads and safer formats.
 
 - Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
 - Published: 2025-12-24

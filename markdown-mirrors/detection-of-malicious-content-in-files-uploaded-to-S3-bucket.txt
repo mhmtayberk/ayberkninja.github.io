@@ -5,7 +5,7 @@ sitemap: false
 ---
 {% raw %}# Detection of Malicious Content in Files Uploaded to S3 Bucket
 
-> Compare open-source and commercial approaches for detecting and responding to malicious files uploaded to Amazon S3 buckets.
+> Open-source and commercial tools for scanning and responding to malicious files uploaded to Amazon S3 buckets, tested and compared.
 
 - Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
 - Published: 2022-03-22

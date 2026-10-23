@@ -1,7 +1,9 @@
 ---
 layout: post
 title: Hello World 👋
-description: "Welcome to ayberk.ninja, a bilingual application security blog covering web, cloud and offensive security research."
+description: "The first post on ayberk.ninja: a brief introduction to the blog and its focus on application security articles in English and Turkish."
+image: /assets/social/hello-world.jpg
+image_alt: "Isometric security research desk connected to web, cloud and AI security modules"
 date: 2020-07-21
 last_modified_at: 2022-03-13T22:02:18+03:00
 tags: ["hello world", "ayberk.ninja", "mehmet ayberk", "cyber security"]

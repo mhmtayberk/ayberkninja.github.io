@@ -1,7 +1,9 @@
 ---
 layout: post
 title: Incident Response On AWS
-description: "A practical guide to AWS incident response using Incident Manager, CloudWatch, runbooks, isolation and automated remediation."
+description: "Configure AWS Incident Manager with contacts, escalation plans, runbooks and CloudWatch alarms for automated incident response."
+image: /assets/social/aws-incident-response.jpg
+image_alt: "Isometric incident response hub coordinating alerts, escalation, runbooks and containment"
 date: 2022-08-18
 last_modified_at: 2022-09-18T19:28:59+03:00
 tags: ["aws", "cloud security", "aws incident response", "aws security", "aws blue team"]

@@ -2,6 +2,8 @@
 title: About Me
 layout: about
 short_bio: Application security engineer and security researcher.
+job_title: Application Security Engineer
+profile_page: true
 description: "About Mehmet Ayberk Annadınç, an application security engineer and AWS Community Builder focused on web, mobile, API, cloud and AI security."
 markdown_mirror: /about.html.md
 ---

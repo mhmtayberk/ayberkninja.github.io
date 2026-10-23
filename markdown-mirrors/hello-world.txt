@@ -5,7 +5,7 @@ sitemap: false
 ---
 {% raw %}# Hello World 👋
 
-> Welcome to ayberk.ninja, a bilingual application security blog covering web, cloud and offensive security research.
+> The first post on ayberk.ninja: a brief introduction to the blog and its focus on application security articles in English and Turkish.
 
 - Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
 - Published: 2020-07-21

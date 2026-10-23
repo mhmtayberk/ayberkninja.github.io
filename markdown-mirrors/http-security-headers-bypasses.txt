@@ -5,7 +5,7 @@ sitemap: false
 ---
 {% raw %}# HTTP Güvenlik Başlıklarını Atlatmak
 
-> HttpOnly, X-Frame-Options ve Content-Security-Policy gibi HTTP güvenlik kontrollerinin senaryo bağımlı bypass yöntemleri.
+> HttpOnly, CSP ve X-Frame-Options kontrollerinin farklı senaryolarda nasıl atlatılabildiğini gösteren pratik yöntemler ve örnekler.
 
 - Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
 - Published: 2022-12-21

@@ -4,29 +4,13 @@
   <body>
     <div id="indicator"></div>
     <div id="page">
-      <style>
-        .title {
-          padding: 5%;
-          color: #101417;
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
-          background: #08CACA;
-          display: grid;
-        }
-        .meta {
-          font-size: 0.7rem;
-          font-weight: normal;
-          text-transform: uppercase;
-        }
-      </style>
       <!-- header -->
       {% include header.html %}
       <!-- nav -->
       {% include nav.html %}
       <!-- page content -->
       <main class="post-list">
-        <h1 class="title">~/posts</h1>
+        <h1 class="page-title">~/posts</h1>
         <div class="language-filter" aria-label="Filter posts by language">
           Post language:
           <button type="button" data-language-filter="en" aria-pressed="false">EN</button>

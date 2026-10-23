@@ -1,6 +1,13 @@
+:root {
+	--theme-color: #08CACA;
+	--page-background-color: rgb(16, 20, 23);
+	--page-text-color: rgb(167, 158, 139);
+	--page-title-text-color: #101417;
+	--page-title-warm-color: #f78e66;
+}
+
 * {
 	font-family: monospace;
-	--theme-color: #08CACA;
 }
 
 p {
@@ -28,7 +35,7 @@ strong {
 body {
 	font-size: 15px;
 	/* background: #000c07; */
-	background: rgb(16, 20, 23) !important;
+	background: var(--page-background-color) !important;
 }
 
 pre {

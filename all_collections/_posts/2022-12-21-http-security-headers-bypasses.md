@@ -1,7 +1,9 @@
 ---
 layout: post
 title: HTTP Güvenlik Başlıklarını Atlatmak
-description: "HttpOnly, X-Frame-Options ve Content-Security-Policy gibi HTTP güvenlik kontrollerinin senaryo bağımlı bypass yöntemleri."
+description: "HttpOnly, CSP ve X-Frame-Options kontrollerinin farklı senaryolarda nasıl atlatılabildiğini gösteren pratik yöntemler ve örnekler."
+image: /assets/social/http-security-header-bypasses.jpg
+image_alt: "Isometric browser security scene showing cookie, policy and nested frame bypass paths"
 date: 2022-12-21
 last_modified_at: 2022-12-22T03:17:35+03:00
 tags: ["http güvenlik başlıkları", "bypass", "web security", "http security headers"]

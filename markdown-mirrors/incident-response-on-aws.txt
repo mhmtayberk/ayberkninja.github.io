@@ -5,7 +5,7 @@ sitemap: false
 ---
 {% raw %}# Incident Response On AWS
 
-> A practical guide to AWS incident response using Incident Manager, CloudWatch, runbooks, isolation and automated remediation.
+> Configure AWS Incident Manager with contacts, escalation plans, runbooks and CloudWatch alarms for automated incident response.
 
 - Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
 - Published: 2022-08-18
