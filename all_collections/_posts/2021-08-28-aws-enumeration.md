@@ -2,7 +2,7 @@
 layout: post
 title: Bulutlara Dokunmak ☁️ - AWS/Enumeration
 description: "AWS ortamlarında domain, GitHub, S3 ve IAM üzerinden güvenlik odaklı enumeration ve varlık keşfi yöntemleri."
-image: /assets/social/aws-enumeration.jpg
+image: /assets/social/aws-enumeration.jpg?v=20261023-2
 image_alt: "Isometric reconnaissance scan discovering domain, repository, S3, IAM and EC2 snapshot assets"
 date: 2021-08-28
 last_modified_at: 2022-03-13T22:02:18+03:00
