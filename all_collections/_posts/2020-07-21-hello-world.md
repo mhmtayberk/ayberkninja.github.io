@@ -2,7 +2,7 @@
 layout: post
 title: Hello World 👋
 description: "The first post on ayberk.ninja: a brief introduction to the blog and its focus on application security articles in English and Turkish."
-image: /assets/social/hello-world.jpg
+image: /assets/social/hello-world.jpg?v=20261023-2
 image_alt: "Isometric terminal publishing a bilingual application security article to web, cloud and research modules"
 date: 2020-07-21
 last_modified_at: 2022-03-13T22:02:18+03:00
