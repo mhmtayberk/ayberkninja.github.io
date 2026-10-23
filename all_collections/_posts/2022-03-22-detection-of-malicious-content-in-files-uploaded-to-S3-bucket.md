@@ -1,7 +1,9 @@
 ---
 layout: post
 title: Detection of Malicious Content in Files Uploaded to S3 Bucket
-description: "Compare open-source and commercial approaches for detecting and responding to malicious files uploaded to Amazon S3 buckets."
+description: "Open-source and commercial tools for scanning and responding to malicious files uploaded to Amazon S3 buckets, tested and compared."
+image: /assets/social/s3-malware-scanning.jpg
+image_alt: "Isometric file scanning pipeline separating clean uploads from quarantined malware"
 date: 2022-03-22
 last_modified_at: 2022-03-22T20:46:45+03:00
 tags: ["aws", "aws security", "s3 antivirus", "aws antivirus", "aws s3 antivirus", "s3 malicious file"]

@@ -1,0 +1,24 @@
+{% assign profile_url = page.url | absolute_url %}
+{% assign profile_page_id = profile_url | append: '#profile' %}
+{% assign person_id = profile_url | append: '#person' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": {{ profile_page_id | jsonify }},
+  "url": {{ profile_url | jsonify }},
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "inLanguage": {{ page.lang | default: site.lang | jsonify }},
+  "mainEntity": {
+    "@type": "Person",
+    "@id": {{ person_id | jsonify }},
+    "name": {{ site.author.name | jsonify }},
+    "alternateName": {{ site.author.twitter | jsonify }},
+    "url": {{ profile_url | jsonify }},
+    "jobTitle": {{ page.job_title | jsonify }},
+    "description": {{ page.short_bio | jsonify }},
+    "sameAs": {{ site.social.links | jsonify }}
+  }
+}
+</script>

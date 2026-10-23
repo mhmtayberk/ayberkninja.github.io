@@ -1,7 +1,3 @@
-* {
-	--theme-color: #08CACA;
-}
-
 :focus-visible {
 	outline: 2px solid var(--theme-color);
 	outline-offset: 3px;
@@ -45,7 +41,7 @@
 	}
 }
 body {
-	color: rgb(167, 158, 139) !important;
+	color: var(--page-text-color) !important;
 }
 
 img {
@@ -98,6 +94,32 @@ main {
 
 main > article {
 	min-width: 0;
+}
+
+.page-title {
+	display: grid;
+	padding: 5%;
+	color: var(--page-title-text-color);
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	background: var(--theme-color);
+}
+
+.page-title--hero {
+	padding: 10% 5%;
+}
+
+.page-title--post {
+	padding: 6.5%;
+}
+
+.page-title--large {
+	font-size: 28px;
+}
+
+.page-title--warm {
+	background: var(--page-title-warm-color);
 }
 
 .content a {
@@ -193,6 +215,22 @@ footer {
 
 .post-article > .meta {
 	margin-bottom: 1rem !important;
+}
+
+.post-hero {
+	margin: 1rem 0 1.5rem;
+	overflow: hidden;
+	border: 1px solid rgba(8, 202, 202, 0.35);
+	border-radius: 4px;
+	background: #080d12;
+}
+
+.post-hero img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 40 / 21;
+	object-fit: cover;
 }
 
 .table-of-contents {

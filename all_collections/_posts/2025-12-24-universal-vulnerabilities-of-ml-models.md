@@ -1,7 +1,9 @@
 ---
 layout: post
 title: "Beyond the Tensors: Exploring the Universal Vulnerabilities of ML Model Formats"
-description: "Explore insecure deserialization in ML model formats, PyTorch and Joblib attack paths, scanner bypasses and safer alternatives."
+description: "Insecure deserialization across PyTorch, Pickle and Joblib model files, with scanner bypasses, hidden payloads and safer formats."
+image: /assets/social/ml-model-format-vulnerabilities.jpg
+image_alt: "Isometric ML model file cutaway revealing a hidden payload among tensor weights"
 date: 2025-12-24
 last_modified_at: 2025-12-25T09:13:13Z
 tags: ["ai security", "ml security", "ml models", "pickle security", "ai supply chain"]

@@ -6,15 +6,6 @@
     <div id="reading-progress" aria-hidden="true"></div>
     <div id="page">
       <style>
-        .title {
-          padding: 6.5%;
-          color: #101417;
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
-          background: #08CACA;
-          display: grid;
-        }
         .meta {
           font-size: 0.9rem;
           line-height: 1.6;
@@ -34,7 +25,7 @@
       <!-- page content -->
       <main class="content post-layout">
         <article class="post-article">
-          <h1 class="title">
+          <h1 class="page-title page-title--post">
             {{ page.title }}
           </h1>
           <p class="meta">
@@ -44,6 +35,18 @@
             <span aria-hidden="true">·</span>
             {% include reading-time.html %}
           </p>
+          {% if page.image %}
+          <figure class="post-hero">
+            <img
+              src="{{ page.image | relative_url }}"
+              alt="{{ page.image_alt | default: page.title | escape }}"
+              width="1200"
+              height="630"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </figure>
+          {% endif %}
           <aside class="table-of-contents" aria-label="Table of contents">
             <details>
               <summary>On this page</summary>

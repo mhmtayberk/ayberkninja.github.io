@@ -2,6 +2,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {% seo %}
+  {% assign twitter_description = page.description | default: site.description %}
+  <meta name="twitter:description" content="{{ twitter_description | strip_html | normalize_whitespace | escape }}" />
+  {% if page.image and page.image_alt %}
+  <meta property="og:image:alt" content="{{ page.image_alt | strip_html | normalize_whitespace | escape }}" />
+  <meta name="twitter:image:alt" content="{{ page.image_alt | strip_html | normalize_whitespace | escape }}" />
+  {% endif %}
+  {% if page.profile_page %}
+    {% include profile-page-schema.html %}
+  {% endif %}
   {% feed_meta %}
   <meta name="robots" content="{% if page.robots %}{{ page.robots }}{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}" />
   <meta name="theme-color" content="#101417" />

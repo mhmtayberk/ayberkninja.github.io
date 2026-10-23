@@ -5,7 +5,7 @@ sitemap: false
 ---
 {% raw %}# Managing Security Alarms with Automation in AWS
 
-> Build automated AWS security responses with Config, CloudTrail, EventBridge, Lambda and Security Hub.
+> Detect AWS security events and automate response with Config, CloudTrail, EventBridge, Lambda and Security Hub.
 
 - Author: [Mehmet Ayberk](https://ayberk.ninja/about.html)
 - Published: 2025-01-25
