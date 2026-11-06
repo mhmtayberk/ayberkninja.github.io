@@ -200,6 +200,31 @@ footer {
 	text-align: center;
 }
 
+.social-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+}
+
+.social-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+}
+
+.social-icon {
+	width: 1em;
+	height: 1em;
+	flex: 0 0 auto;
+	fill: currentColor;
+}
+
+.social-separator {
+	color: rgb(167, 158, 139);
+}
+
 /* article reading tools */
 
 .post-layout {
