@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <marker id="aru" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1.5 1.5L8.5 5L1.5 8.5" fill="none" stroke="#5c6b6a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="430" fill="#101417"/>
+
+  <text x="36" y="38" fill="#72b6b5" font-size="14" font-weight="700">// how an unknown constraint becomes a no-op</text>
+
+  <!-- left column: 4 steps, width 340 -->
+  <rect x="36" y="66" width="340" height="50" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="52" y="87" fill="#a79e8b" font-size="13">attacker puts a junk constraint</text>
+  <text x="52" y="105" fill="#8fb9b2" font-size="12">{ "foo": "bar" }</text>
+
+  <line x1="206" y1="116" x2="206" y2="142" stroke="#5c6b6a" stroke-width="1" marker-end="url(#aru)"/>
+
+  <rect x="36" y="144" width="340" height="62" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="52" y="166" fill="#a79e8b" font-size="13">SDK parses the constraints list</text>
+  <text x="52" y="185" fill="#5c6b6a" font-size="11">union has no discriminator, so it</text>
+  <text x="52" y="199" fill="#5c6b6a" font-size="11">tries each type in order</text>
+
+  <line x1="206" y1="206" x2="206" y2="232" stroke="#5c6b6a" stroke-width="1" marker-end="url(#aru)"/>
+
+  <rect x="36" y="234" width="340" height="62" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="52" y="256" fill="#a79e8b" font-size="13">ExecutionDate accepts it</text>
+  <text x="52" y="275" fill="#5c6b6a" font-size="11">all its fields are optional, and</text>
+  <text x="52" y="289" fill="#5c6b6a" font-size="11">unknown keys are ignored</text>
+
+  <line x1="206" y1="296" x2="206" y2="322" stroke="#5c6b6a" stroke-width="1" marker-end="url(#aru)"/>
+
+  <rect x="36" y="324" width="340" height="50" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="52" y="345" fill="#a79e8b" font-size="13">becomes an empty ExecutionDate</text>
+  <text x="52" y="363" fill="#5c6b6a" font-size="11">which constrains nothing</text>
+
+  <!-- right column: spec vs reality, width 320 -->
+  <rect x="416" y="144" width="320" height="92" fill="none" stroke="#5c6b6a" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="432" y="168" fill="#72b6b5" font-size="12">what the spec requires</text>
+  <text x="432" y="190" fill="#5c6b6a" font-size="11">"Any unknown Constraints MUST be</text>
+  <text x="432" y="205" fill="#5c6b6a" font-size="11">treated as failing evaluation."</text>
+  <text x="432" y="226" fill="#8fb9b2" font-size="11">expected: reject</text>
+
+  <rect x="416" y="252" width="320" height="92" fill="none" stroke="#5c6b6a" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="432" y="276" fill="#72b6b5" font-size="12">what actually happens</text>
+  <text x="432" y="298" fill="#5c6b6a" font-size="11">a $999,999.99 payment is checked</text>
+  <text x="432" y="313" fill="#5c6b6a" font-size="11">against the no-op constraint</text>
+  <text x="432" y="334" fill="#8fb9b2" font-size="11">actual: ALLOWED</text>
+</svg>

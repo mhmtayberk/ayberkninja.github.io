@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 390" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1.5 1.5L8.5 5L1.5 8.5" fill="none" stroke="#5c6b6a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="680" height="390" fill="#101417"/>
+
+  <text x="40" y="40" fill="#72b6b5" font-size="14" font-weight="700">// human-not-present flow</text>
+
+  <!-- ===== left column: the chain ===== -->
+  <!-- A: user + trusted surface  (22 chars) -->
+  <rect x="40" y="64" width="212" height="54" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="56" y="90" fill="#a79e8b" font-size="13">user + trusted surface</text>
+  <text x="56" y="108" fill="#5c6b6a" font-size="11">signs open mandate</text>
+
+  <!-- B: open_mandate token -->
+  <rect x="40" y="146" width="212" height="42" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="56" y="166" fill="#8fb9b2" font-size="12">open_mandate</text>
+  <text x="56" y="181" fill="#5c6b6a" font-size="11">limits + agent key (cnf)</text>
+
+  <!-- C: shopping agent -->
+  <rect x="40" y="216" width="212" height="54" fill="none" stroke="#a79e8b" stroke-width="1"/>
+  <text x="56" y="242" fill="#a79e8b" font-size="13">shopping agent</text>
+  <text x="56" y="260" fill="#5c6b6a" font-size="11">signs closed mandate</text>
+
+  <!-- D: closed_mandate token -->
+  <rect x="40" y="298" width="212" height="42" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="56" y="318" fill="#8fb9b2" font-size="12">closed_mandate</text>
+  <text x="56" y="333" fill="#5c6b6a" font-size="11">the real charge</text>
+
+  <!-- vertical arrows (center x = 146) -->
+  <line x1="146" y1="118" x2="146" y2="144" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+  <line x1="146" y1="188" x2="146" y2="214" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+  <line x1="146" y1="270" x2="146" y2="296" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+
+  <!-- ===== right side: verifier ===== -->
+  <!-- E: merchant / payment side  (23 chars), center y = 265 -->
+  <rect x="300" y="236" width="232" height="58" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="316" y="262" fill="#a79e8b" font-size="13">merchant / payment side</text>
+  <text x="316" y="280" fill="#5c6b6a" font-size="11">deterministic verify</text>
+
+  <!-- D -> E : single L-path into bottom-center of E (center x = 416, E bottom = 294) -->
+  <path d="M252 319 L416 319 L416 298" fill="none" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+
+  <!-- ===== checks column (centered on E center y=265) ===== -->
+  <rect x="554" y="206" width="86" height="30" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="597" y="225" fill="#8fb9b2" font-size="11" text-anchor="middle">signature</text>
+  <rect x="554" y="250" width="86" height="30" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="597" y="269" fill="#8fb9b2" font-size="11" text-anchor="middle">sd_hash</text>
+  <rect x="554" y="294" width="86" height="30" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="597" y="313" fill="#8fb9b2" font-size="11" text-anchor="middle">constraints</text>
+
+  <!-- symmetric fan from E right-edge center (532,265) -->
+  <line x1="532" y1="265" x2="552" y2="221" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+  <line x1="532" y1="265" x2="552" y2="265" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+  <line x1="532" y1="265" x2="552" y2="309" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar)"/>
+
+  <!-- caption (code-comment style), top-right empty area -->
+  <text x="300" y="100" fill="#5c6b6a" font-size="11">// user is offline; the agent signs the</text>
+  <text x="300" y="118" fill="#5c6b6a" font-size="11">// closed mandate, but it must stay</text>
+  <text x="300" y="136" fill="#5c6b6a" font-size="11">// inside the open mandate's limits</text>
+</svg>

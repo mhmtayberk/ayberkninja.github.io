@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <marker id="ar3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1.5 1.5L8.5 5L1.5 8.5" fill="none" stroke="#5c6b6a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="680" height="430" fill="#101417"/>
+
+  <text x="40" y="38" fill="#72b6b5" font-size="14" font-weight="700">// anatomy of an SD-JWT mandate</text>
+
+  <!-- signed region bracket label -->
+  <text x="40" y="70" fill="#5c6b6a" font-size="11">signed by the issuer</text>
+
+  <!-- header -->
+  <rect x="40" y="80" width="300" height="52" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="56" y="102" fill="#a79e8b" font-size="13">header</text>
+  <text x="56" y="120" fill="#5c6b6a" font-size="11">alg: ES256, typ: example+sd-jwt</text>
+
+  <!-- payload -->
+  <rect x="40" y="144" width="300" height="74" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="56" y="166" fill="#a79e8b" font-size="13">payload</text>
+  <text x="56" y="184" fill="#5c6b6a" font-size="11">_sd_alg: sha-256</text>
+  <text x="56" y="202" fill="#8fb9b2" font-size="11">digest: ve7a42_wtSvp...DuhU</text>
+
+  <!-- signature -->
+  <rect x="40" y="230" width="300" height="52" fill="none" stroke="#72b6b5" stroke-width="1"/>
+  <text x="56" y="252" fill="#a79e8b" font-size="13">signature</text>
+  <text x="56" y="270" fill="#5c6b6a" font-size="11">covers header + payload</text>
+
+  <!-- signed bracket line -->
+  <line x1="32" y1="80" x2="32" y2="282" stroke="#72b6b5" stroke-width="1"/>
+
+  <!-- disclosure (separate, unsigned) -->
+  <text x="372" y="70" fill="#5c6b6a" font-size="11">sent alongside, not inside the signature</text>
+  <rect x="372" y="144" width="268" height="74" fill="#0b1f1a" stroke="#2f4a44" stroke-width="1"/>
+  <text x="388" y="166" fill="#a79e8b" font-size="13">disclosure</text>
+  <text x="388" y="184" fill="#5c6b6a" font-size="11">[salt, { payee, amount, ... }]</text>
+  <text x="388" y="202" fill="#8fb9b2" font-size="11">the real data lives here</text>
+
+  <!-- binding arrow: payload digest <-> disclosure (sha-256) -->
+  <line x1="370" y1="181" x2="342" y2="181" stroke="#5c6b6a" stroke-width="1" marker-end="url(#ar3)"/>
+
+
+  <!-- caption -->
+  <text x="40" y="330" fill="#5c6b6a" font-size="11">// the signature protects the payload; the payload holds only the sha-256 digest</text>
+  <text x="40" y="348" fill="#5c6b6a" font-size="11">// of each disclosure. change one and its digest no longer matches, so it is dropped.</text>
+  <text x="40" y="366" fill="#5c6b6a" font-size="11">// omit a disclosure and the signature still verifies: that gap is used later.</text>
+</svg>
