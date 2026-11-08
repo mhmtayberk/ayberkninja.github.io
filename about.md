@@ -26,6 +26,7 @@ I'm an <a href="https://aws.amazon.com/developer/community/community-builders/" 
 <a href="https://hackallday.com/" target="_blank" rel="noopener noreferrer">Hack All Day</a> is an independent community that I founded with a friend. We created it to help people interested in cybersecurity learn together through events, articles and community activities.
 
 ## Talks and Training
+<a href="https://www.linkedin.com/feed/update/urn:li:activity:7508803471228252160/" target="_blank" rel="noopener noreferrer">AWS Cloud and AI Day Türkiye 2026 - An Attacker’s First 15 Minutes in an AWS Account</a> <br>
 <a href="https://www.linkedin.com/feed/update/urn:li:activity:6937077562888069120/" target="_blank" rel="noopener noreferrer">Hacktrick'22 Conf - AWS Security Class</a> <br>
 <a href="https://www.youtube.com/watch?v=pyRXAvTJIzc&t=1400s" target="_blank" rel="noopener noreferrer">IEEE Beykent - How To Build Secure Login?</a> <br>
 <a href="https://www.facebook.com/beykentodek/posts/1305324409650299/" target="_blank" rel="noopener noreferrer">Beykent BMK - Cyber Security 101</a> <br>
