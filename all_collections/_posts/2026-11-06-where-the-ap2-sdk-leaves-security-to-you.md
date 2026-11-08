@@ -16,17 +16,15 @@ lang: en
 
 ## TLDR;
 
-The rapid development of Artificial Intelligence in recent times has led to the efforts of virtually every industry to keep pace with this development, emerging new technologies, new architectures, new vulnerabilities, and new concepts. It is an inevitable field that almost everyone has encountered-either directly or indirectly-spent time learning about, and gotten their hands dirty with. Some concepts, architectures, and protocols are still very new and in the development phase.
+AI agents are starting to pay on our behalf, and Google's Agent Payments Protocol (AP2) is one attempt to make that safe. Most security research on it asks the same question: how do we trick the LLM? I wanted to ask a different one. If the agent is already compromised, does the protocol's cryptographic mandate layer still protect you?
 
-As with almost everything else in the world, the security and regulation of new concepts related to AI must be considered. Understanding how these new concepts work, evaluating them from a security perspective, and contributing to their development is the sole responsibility of security researchers.
+AP2's own security document is blunt about the threat model:
 
-At this point, a relatively new protocol I came across related to agentic payment methods caught my attention: Google’s Agent Payments Protocol (AP2). I spent some time trying to understand this protocol, how it works, and some aspects of its security. While reviewing some previous security research on AP2, I noticed that most studies focused solely on the question of “how can we trick the LLM?” Google’s Agent Payments Protocol (AP2) clearly states the following in the first paragraph of its security document:
+> "AP2 assumes that preventing prompt injection attacks is infeasible. Therefore, all LLMs and Agents MUST be considered potential attackers and are explicitly included in the threat model."
 
-> “AP2 assumes that preventing prompt injection attacks is infeasible. Therefore, all LLMs and Agents MUST be considered potential attackers and are explicitly included in the threat model.”
+So I built a hands-on lab against the reference SDK and went through it from an integrator's point of view: which checks the SDK performs for you, and which ones it quietly leaves to you. The cryptographic core holds. But several checks the spec implies are left to whoever integrates the SDK, and a mandate can verify cleanly while the user's limits go unenforced.
 
-This blog post focuses specifically on the mandates signed by users-an aspect that often goes overlooked-and the gaps in the SDK, which lie at the heart of the protocol. Our question is this: If the agent has already been compromised, does the protocol’s cryptographic layer still protect you? Which controls can you leave to the SDK, and which ones must you handle yourself?
-
-> Most of the behaviors in this post are not new; many are logged in AP2's own issue tracker, and some were reviewed by Google and marked as "intended behavior." One of them I reported myself (see below). This post is not a "0-day disclosure." It gathers these scattered behaviors into a single working lab and shows what they mean from an integrator's perspective.
+Most of the behaviors here are not new; they're logged in AP2's own issue tracker, and some were reviewed by Google and marked as "intended behavior." One of them I couldn't find reported anywhere, so I reported it myself. This post is not a "0-day disclosure." It gathers these scattered behaviors into a single working lab and shows what they mean if you build on AP2: the SDK verifying a mandate without error does not mean your constraints were enforced, so the checks the spec leaves implicit are yours to make explicit.
 
 ## AP2
 Before we move on to our scenarios, we need to understand the protocol itself a bit. Why it’s used, how it’s used, and so on.
