@@ -94,6 +94,8 @@ pip install -e .
 cd ..
 ```
 
+> This lab was written against AP2 at commit **e1ea56d** (spec v0.2) with Pydantic 2.12.5. The repository is active and its generated model can change, so the **git checkout** above pins the exact state described in this post. Without it, a newer commit may make a script behave differently from what you read here.
+
 ### Verification and First Mandate
 Let's verify that the installation is working using 01_setup_check.py. The script signs a Payment Mandate and then verifies it.
 
@@ -207,6 +209,18 @@ Not at all. Throughout this blog post, we’ve discussed some of AP2’s secure 
 Some, like the withheld disclosure, Google has already reviewed and classified as intended behavior rather than something to fix, because the protocol’s threat model assumes the agent can be hostile and pushes that responsibility onto the integrator.
 
 The point is this; in this protocol, security does not come solely from the signature; it comes from the integrator plugging the gaps in their own code that the signature does not guarantee.
+
+## The Integrator's Checklist
+
+Everything above comes down to a handful of concrete controls. The SDK's defaults are permissive: supply every check it treats as optional, and perform every check it never does.
+
+* **Do not read an empty violation list as a passed check.** After the SDK parses a mandate, confirm that each constraint resolved to the exact type you expect and still carries its bounds. A limit that comes back as an empty **ExecutionDate** has been silently dropped, not satisfied. Until the parse-time behavior is fixed (tracked in [issue #395](https://github.com/google-agentic-commerce/AP2/issues/395)), validate the resolved constraints yourself instead of trusting the parse.
+* **Require the limits you expect to be present, and fail closed when one is missing.** A selectively disclosable field can be withheld without breaking the issuer signature, and the verifier evaluates only what it is shown. Close this on two sides: at issuance, keep security-critical limits out of the selectively disclosable set so they always travel in the signed body; at verification, decide in advance which limits a mandate must carry and reject the presentation if any is absent. Reaching for a preset does not help here, because a preset payee or amount is itself an optional field that parses as absent once its disclosure is withheld.
+* **Bind the checkout yourself.** Compute the hash of the merchant's **checkout_jwt** and pass it as **expected_checkout_hash** to **CheckoutMandateChain.verify**, together with the **checkout_jwt** so the constraints are evaluated rather than skipped. Verify the merchant's signature on the **checkout_jwt** on your own, because the SDK only reads its contents and never checks that signature.
+* **Normalize currency amounts before you trust a budget.** The SDK's budget cap assumes every currency has 100 minor units, so for a zero-decimal currency such as JPY the effective limit is inflated a hundredfold. Convert every amount to the correct minor-unit scale for its currency before comparing, and restrict the currencies you accept to the ones you have tested.
+* **Treat an accepted mandate as spent.** A closed Payment Mandate is not marked as used once it is accepted, so the same user consent can settle more than once (issue #346). Record the transaction identifiers you have already honored and reject a repeat, rather than relying on the protocol to prevent replay.
+* **Match the merchant on an identifier that cannot be edited.** If either side is missing a merchant id, the SDK falls back to matching on the name and website fields, both of which an attacker can copy from a legitimate merchant (issue #315). Pin the merchant to a fixed, non-editable id and reject anything that does not match it.
+* **Pin the SDK and watch what you depend on.** Every behavior here is tied to a specific commit, and the parts left to you can move in either direction as the SDK changes. Pin the version you integrated against, follow the issues behind the limits you rely on, and re-run your own checks on every upgrade instead of assuming a new release only fixes things.
 
 ## The Agent Side
 Throughout this article, I have deliberately focused on a single layer: the cryptographic verification of mandates. But the attack surface for AP2 is not limited to this. There is also the aspect of the agent itself. Attacks such as tricking the agent into selecting a poor product via prompt injection, serving the agent a spoofed Agent Card, or misdirecting the user’s intent during the presentation phase constitute a separate area of research. There are both academic studies and articles by commercial security teams on this topic.
