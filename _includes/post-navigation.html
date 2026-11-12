@@ -1,0 +1,32 @@
+{% if page.previous or page.next %}
+<nav
+  class="post-navigation{% unless page.previous and page.next %} post-navigation--single{% endunless %}"
+  aria-label="{% if page.lang == 'tr' %}Yazılar arası gezinme{% else %}Article navigation{% endif %}"
+>
+  {% if page.previous %}
+  <a class="post-navigation__link post-navigation__link--previous" href="{{ page.previous.url | relative_url }}" rel="prev">
+    <span class="post-navigation__direction">&larr; {% if page.lang == 'tr' %}Önceki yazı{% else %}Previous article{% endif %}</span>
+    <span class="post-navigation__title">{{ page.previous.title }}</span>
+    <span class="post-navigation__meta">
+      <span>[{{ page.previous.lang | default: site.lang | upcase }}]</span>
+      <span>{{ page.previous.topic | default: page.previous.categories.first | default: 'Security' }}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime="{{ page.previous.date | date_to_xmlschema }}">{{ page.previous.date | date: "%b %-d, %Y" }}</time>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if page.next %}
+  <a class="post-navigation__link post-navigation__link--next" href="{{ page.next.url | relative_url }}" rel="next">
+    <span class="post-navigation__direction">{% if page.lang == 'tr' %}Sonraki yazı{% else %}Next article{% endif %} &rarr;</span>
+    <span class="post-navigation__title">{{ page.next.title }}</span>
+    <span class="post-navigation__meta">
+      <span>[{{ page.next.lang | default: site.lang | upcase }}]</span>
+      <span>{{ page.next.topic | default: page.next.categories.first | default: 'Security' }}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime="{{ page.next.date | date_to_xmlschema }}">{{ page.next.date | date: "%b %-d, %Y" }}</time>
+    </span>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}
